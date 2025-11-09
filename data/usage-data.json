@@ -1,0 +1,21 @@
+{
+  "lastUpdated": "2025-11-09T00:00:00Z",
+  "metrics": {
+    "fourHourCap": {
+      "used": 0,
+      "limit": 50,
+      "percentage": 0.0
+    },
+    "weekCap": {
+      "used": 0,
+      "limit": 1000,
+      "percentage": 0.0
+    },
+    "opusWeekCap": {
+      "used": 0,
+      "limit": 500,
+      "percentage": 0.0
+    }
+  },
+  "historicalData": []
+}
