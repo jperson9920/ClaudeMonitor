@@ -9,12 +9,12 @@
 
 ## Objective
 
-Manually inspect the claude.ai/usage page to discover the actual DOM selectors for usage metrics, implement a robust fallback selector strategy, and update the scraper with correct selectors.
+Manually inspect the claude.ai/settings/usage page to discover the actual DOM selectors for usage metrics, implement a robust fallback selector strategy, and update the scraper with correct selectors.
 
 ## Requirements
 
 ### Functional Requirements
-1. Manually inspect claude.ai/usage page structure using DevTools
+1. Manually inspect claude.ai/settings/usage page structure using DevTools
 2. Identify selectors for all three usage metrics (4-hour, 1-week, Opus 1-week)
 3. Identify selectors for reset time information
 4. Document all discovered selectors with screenshots
@@ -43,9 +43,9 @@ Manually inspect the claude.ai/usage page to discover the actual DOM selectors f
 
 ### Step 1: Manual Selector Discovery
 
-1. **Open claude.ai/usage in Chrome/Edge**
+1. **Open claude.ai/settings/usage in Chrome/Edge**
    ```
-   https://claude.ai/usage
+   https://claude.ai/settings/usage
    ```
 
 2. **Open DevTools (F12)**
@@ -76,7 +76,7 @@ Create [`docs/selectors.md`](../../docs/selectors.md):
 # Claude.ai Usage Page Selectors
 
 **Last Verified**: 2025-11-08  
-**Page URL**: https://claude.ai/usage
+**Page URL**: https://claude.ai/settings/usage
 
 ## 4-Hour Cap
 
@@ -132,7 +132,7 @@ Create [`src/scraper/selector_discovery.py`](../../src/scraper/selector_discover
 """
 Selector Discovery and Validation Tool
 
-Helps discover and validate selectors for claude.ai/usage page.
+Helps discover and validate selectors for claude.ai/settings/usage page.
 Run this script to test selectors against the live page.
 """
 
@@ -142,7 +142,7 @@ from pathlib import Path
 
 
 async def discover_selectors():
-    """Discover and validate selectors on claude.ai/usage."""
+    """Discover and validate selectors on claude.ai/settings/usage."""
     
     async with async_playwright() as p:
         # Launch browser
@@ -156,8 +156,8 @@ async def discover_selectors():
         page = await context.new_page()
         
         # Navigate to usage page
-        print("📄 Navigating to claude.ai/usage...")
-        await page.goto('https://claude.ai/usage', wait_until='networkidle')
+        print("📄 Navigating to claude.ai/settings/usage...")
+        await page.goto('https://claude.ai/settings/usage', wait_until='networkidle')
         
         # Check if logged in
         if '/login' in page.url:
@@ -385,7 +385,7 @@ async def extract_usage_data(self) -> Dict[str, Any]:
 
 ## Definition of Done
 
-- [x] claude.ai/usage page inspected manually
+- [x] claude.ai/settings/usage page inspected manually
 - [x] All selectors discovered and documented
 - [x] Fallback selector strategy implemented
 - [x] Selector discovery tool created and run

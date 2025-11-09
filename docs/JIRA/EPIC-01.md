@@ -83,7 +83,7 @@ atomicwrites==1.4.1
 ## Success Criteria
 
 ### Functional Requirements
-- ✅ Scraper successfully polls claude.ai/usage every 5 minutes
+- ✅ Scraper successfully polls claude.ai/settings/usage every 5 minutes
 - ✅ Manual login flow with persistent session across restarts
 - ✅ Overlay displays three usage metrics: 4-hour cap, 1-week cap, Opus 1-week
 - ✅ Progress bars with color coding (blue <75%, orange 75-90%, red >90%)
@@ -212,7 +212,7 @@ ClaudeMonitor/
 **Estimated Effort**: 4 hours  
 **Dependencies**: STOR-02
 
-**Objective**: Manually inspect claude.ai/usage page to discover correct selectors and implement fallback selector strategy.
+**Objective**: Manually inspect claude.ai/settings/usage page to discover correct selectors and implement fallback selector strategy.
 
 ### [EPIC-01-STOR-10](EPIC-01-STOR-10.md): Testing and Validation
 **Status**: Not Started  
@@ -327,7 +327,7 @@ ClaudeMonitor/
 ## Acceptance Criteria for EPIC-01 Completion
 
 - [ ] All 11 stories marked as DONE
-- [ ] Scraper successfully polls claude.ai/usage every 5 minutes
+- [ ] Scraper successfully polls claude.ai/settings/usage every 5 minutes
 - [ ] Overlay displays all three usage metrics with accurate data
 - [ ] Projection algorithms calculate time-to-cap estimates
 - [ ] Always-on-top window works correctly on Windows 11

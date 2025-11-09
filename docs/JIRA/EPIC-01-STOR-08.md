@@ -184,7 +184,7 @@ class SessionManager:
             True if authenticated, False if login required
         """
         try:
-            await page.goto('https://claude.ai/usage', 
+            await page.goto('https://claude.ai/settings/usage', 
                           wait_until='domcontentloaded',
                           timeout=5000)
             
