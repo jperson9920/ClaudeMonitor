@@ -9,14 +9,14 @@
 
 ## Objective
 
-Implement a Playwright-based web scraper that monitors claude.ai/usage, maintains persistent authentication across restarts, polls usage data every 5 minutes, and saves data to JSON with atomic writes.
+Implement a Playwright-based web scraper that monitors claude.ai/settings/usage, maintains persistent authentication across restarts, polls usage data every 5 minutes, and saves data to JSON with atomic writes.
 
 ## Requirements
 
 ### Functional Requirements
 1. Launch Playwright with persistent browser context for session persistence
 2. Detect if user is logged in; if not, wait for manual login
-3. Poll claude.ai/usage page every 5 minutes
+3. Poll claude.ai/settings/usage page every 5 minutes
 4. Extract three usage metrics: 4-hour cap, 1-week cap, Opus 1-week cap
 5. Save extracted data to JSON file atomically
 6. Handle session expiration gracefully
@@ -47,7 +47,7 @@ Implement a Playwright-based web scraper that monitors claude.ai/usage, maintain
 - [x] First run prompts user to log in manually
 - [x] Subsequent runs restore session automatically
 - [x] Polling loop runs every 5 minutes indefinitely
-- [x] Usage data extracted successfully from claude.ai/usage
+- [x] Usage data extracted successfully from claude.ai/settings/usage
 - [x] Data saved to `data/usage-data.json` atomically
 - [x] Session expiration detected and user prompted to re-login
 - [x] SIGINT (Ctrl+C) triggers graceful shutdown
@@ -67,7 +67,7 @@ Create [`src/scraper/claude_usage_monitor.py`](../../src/scraper/claude_usage_mo
 """
 Claude Usage Monitor - Web Scraper Component
 
-Polls claude.ai/usage every 5 minutes and extracts usage data.
+Polls claude.ai/settings/usage every 5 minutes and extracts usage data.
 Uses Playwright with persistent browser context for session management.
 
 Reference: compass_artifact document lines 353-533
@@ -120,7 +120,7 @@ class ClaudeUsageMonitor:
             # Check authentication
             self.page = await self.context.new_page()
             print("🔍 Checking authentication status...")
-            await self.page.goto('https://claude.ai/usage', 
+            await self.page.goto('https://claude.ai/settings/usage', 
                                wait_until='networkidle',
                                timeout=30000)
             
@@ -153,13 +153,13 @@ class ClaudeUsageMonitor:
                 await asyncio.sleep(10)  # Wait before retry
     
     async def poll(self) -> None:
-        """Poll usage data from claude.ai/usage."""
+        """Poll usage data from claude.ai/settings/usage."""
         timestamp = datetime.utcnow().isoformat() + 'Z'
         print(f'[{timestamp}] 📊 Polling usage data...')
         
         try:
             # Navigate to usage page
-            await self.page.goto('https://claude.ai/usage',
+            await self.page.goto('https://claude.ai/settings/usage',
                                wait_until='networkidle',
                                timeout=30000)
             
@@ -369,7 +369,7 @@ async def test_data_structure():
    ```powershell
    python src/scraper/claude_usage_monitor.py
    ```
-3. Browser window should open to claude.ai/usage
+3. Browser window should open to claude.ai/settings/usage
 4. If redirected to login, log in manually
 5. Verify console shows "✅ Login successful!"
 6. Wait for first poll to complete
@@ -434,7 +434,7 @@ The scraper handles these error conditions:
 
 ## Notes
 
-- **Selector Placeholders**: The current selectors are placeholders. STOR-09 will discover actual selectors from claude.ai/usage
+- **Selector Placeholders**: The current selectors are placeholders. STOR-09 will discover actual selectors from claude.ai/settings/usage
 - **Headless Mode**: Currently runs with `headless=False` for easier debugging. Can be changed to `True` after validation
 - **Chrome Channel**: Uses installed Chrome rather than bundled Chromium for better compatibility
 - **Atomic Writes**: Uses `atomicwrites` library to prevent data corruption during writes

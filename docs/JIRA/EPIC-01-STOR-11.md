@@ -126,7 +126,7 @@ python -c "import playwright; import PyQt5; print('✅ Installation successful!'
    ```
 
 2. **First Run - Manual Login**:
-   - Browser window opens to claude.ai/usage
+   - Browser window opens to claude.ai/settings/usage
    - Log in manually (supports 2FA)
    - Session will persist for future runs
 
@@ -234,7 +234,7 @@ Copy-Item data\usage-data.json.bak data\usage-data.json
 
 This tool uses a multi-process architecture for fault isolation:
 
-- **Scraper Process**: Playwright-based web scraper polls claude.ai/usage
+- **Scraper Process**: Playwright-based web scraper polls claude.ai/settings/usage
 - **Overlay Process**: PyQt5 always-on-top UI displays metrics
 - **Communication**: File-based via atomic JSON writes
 - **Data Storage**: JSON with 7-day historical data retention

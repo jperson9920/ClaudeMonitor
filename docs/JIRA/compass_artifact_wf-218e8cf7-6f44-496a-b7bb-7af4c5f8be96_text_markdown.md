@@ -150,7 +150,7 @@ class ClaudeUsageMonitor {
       
       // Check if logged in
       this.page = await this.context.newPage();
-      await this.page.goto('https://claude.ai/usage', {
+      await this.page.goto('https://claude.ai/settings/usage', {
         waitUntil: 'networkidle',
         timeout: 30000
       });
@@ -181,7 +181,7 @@ class ClaudeUsageMonitor {
     
     try {
       // Navigate to usage page
-      await this.page.goto('https://claude.ai/usage', { 
+      await this.page.goto('https://claude.ai/settings/usage', { 
         waitUntil: 'networkidle',
         timeout: 30000 
       });
@@ -246,7 +246,7 @@ class ClaudeUsageMonitor {
       };
       
       // Extract metrics (adapt selectors to actual claude.ai structure)
-      // These are example selectors - inspect claude.ai/usage to get actual selectors
+      // These are example selectors - inspect claude.ai/settings/usage to get actual selectors
       return {
         timestamp: new Date().toISOString(),
         fourHour: {
@@ -387,7 +387,7 @@ class ClaudeUsageMonitor:
             
             # Check authentication
             self.page = await self.context.new_page()
-            await self.page.goto('https://claude.ai/usage', 
+            await self.page.goto('https://claude.ai/settings/usage', 
                                wait_until='networkidle',
                                timeout=30000)
             
@@ -419,7 +419,7 @@ class ClaudeUsageMonitor:
         print(f'[{timestamp}] 📊 Polling...')
         
         try:
-            await self.page.goto('https://claude.ai/usage',
+            await self.page.goto('https://claude.ai/settings/usage',
                                wait_until='networkidle',
                                timeout=30000)
             
@@ -553,7 +553,7 @@ if __name__ == '__main__':
 ```javascript
 async function isSessionValid(page) {
   try {
-    await page.goto('https://claude.ai/usage', { timeout: 10000 });
+    await page.goto('https://claude.ai/settings/usage', { timeout: 10000 });
     if (page.url().includes('/login')) {
       return false;
     }
@@ -567,7 +567,7 @@ async function isSessionValid(page) {
 
 ### Selector Discovery
 
-**To find the correct selectors for claude.ai/usage**:
+**To find the correct selectors for claude.ai/settings/usage**:
 
 1. Open chrome.ai/usage in Chrome/Edge
 2. Open DevTools (F12)
@@ -1430,7 +1430,7 @@ if __name__ == '__main__':
 - [ ] Install browsers: `playwright install chromium`
 - [ ] Create scraper script with persistent context
 - [ ] Test manual login and session persistence
-- [ ] Inspect claude.ai/usage to find correct selectors
+- [ ] Inspect claude.ai/settings/usage to find correct selectors
 - [ ] Implement data extraction with multiple selector fallbacks
 - [ ] Test atomic file writes
 
@@ -1469,7 +1469,7 @@ if __name__ == '__main__':
 
 ### Phase 6: Testing
 - [ ] Test session expiration handling
-- [ ] Test with actual claude.ai/usage page
+- [ ] Test with actual claude.ai/settings/usage page
 - [ ] Verify atomic writes don't corrupt data
 - [ ] Test multi-monitor scenarios
 - [ ] Verify resource usage over 24 hours
@@ -1479,7 +1479,7 @@ if __name__ == '__main__':
 
 ### Issue: Selectors not finding elements
 
-**Solution**: Inspect claude.ai/usage page structure
+**Solution**: Inspect claude.ai/settings/usage page structure
 ```python
 # Debug selector finding
 selectors = await page.evaluate('''() => {

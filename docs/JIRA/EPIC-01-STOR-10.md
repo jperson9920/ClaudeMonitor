@@ -17,7 +17,7 @@ Validate all system components through comprehensive testing including unit test
 1. Unit tests for all core algorithms (projections, data schema)
 2. Integration tests for scraper → JSON → UI data flow
 3. Manual validation of UI appearance and behavior
-4. Selector accuracy validation against live claude.ai/usage
+4. Selector accuracy validation against live claude.ai/settings/usage
 5. Atomic write integrity testing
 6. Multi-monitor positioning testing
 7. 24-hour continuous operation test
@@ -188,7 +188,7 @@ async def test_scraper_creates_valid_json(tmp_path):
    - Extracted data matches page display
 
 3. **Visual Validation**
-   - Open claude.ai/usage in browser
+   - Open claude.ai/settings/usage in browser
    - Compare displayed percentages with extracted data
    - Verify reset times match
 
@@ -318,7 +318,7 @@ Start-Process python -ArgumentList "tests/performance/monitor_resources.py","ove
 Based on [EPIC-01 Acceptance Criteria](EPIC-01.md:285):
 
 - [ ] **Scraper Functionality**
-  - [ ] Polls claude.ai/usage every 5 minutes
+  - [ ] Polls claude.ai/settings/usage every 5 minutes
   - [ ] Manual login flow works
   - [ ] Session persists across restarts
   - [ ] Data saved to JSON correctly

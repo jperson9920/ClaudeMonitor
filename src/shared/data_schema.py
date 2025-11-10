@@ -1,176 +1,292 @@
+# src/shared/data_schema.py
 """
-Claude Usage Monitor - Data Schema
+Data Schema Definitions and Atomic Write Utilities
 
-Defines the JSON data structure and validation for usage data storage.
+Defines the JSON schema for usage data and provides atomic write functions
+to prevent data corruption during concurrent access.
 
-Reference: EPIC-01-STOR-03 (JSON Data Schema)
+Reference: compass_artifact document lines 924-996
 """
 
-from typing import Dict, Any, List, Optional
+import json
 from datetime import datetime
+from pathlib import Path
+from typing import Dict, Any, List, Optional
+from atomicwrites import atomic_write
 
 
-# Schema version
-SCHEMA_VERSION = "1.0.0"
+class DataSchema:
+    """Manages JSON schema for usage data."""
 
+    SCHEMA_VERSION = "1.0.0"
+    MAX_HISTORICAL_POINTS = 2016  # 7 days * 24 hours * 12 (5-min intervals)
 
-def validate_cap_structure(cap_data: Dict[str, Any], cap_name: str) -> List[str]:
-    """
-    Validate a single cap structure.
+    @staticmethod
+    def create_empty_schema() -> Dict[str, Any]:
+        """
+        Create an empty schema structure.
 
-    Args:
-        cap_data: Cap data dictionary
-        cap_name: Name of the cap (for error messages)
-
-    Returns:
-        List of validation errors (empty if valid)
-    """
-    errors = []
-
-    required_fields = ['used', 'limit', 'percentage']
-    for field in required_fields:
-        if field not in cap_data:
-            errors.append(f"{cap_name} missing required field '{field}'")
-        elif not isinstance(cap_data[field], (int, float)):
-            errors.append(f"{cap_name}.{field} must be a number")
-
-    # Validate percentage is in valid range
-    if 'percentage' in cap_data:
-        if not 0 <= cap_data['percentage'] <= 100:
-            errors.append(f"{cap_name}.percentage must be between 0 and 100")
-
-    return errors
-
-
-def validate_historical_data_point(point: Dict[str, Any], index: int) -> List[str]:
-    """
-    Validate a single historical data point.
-
-    Args:
-        point: Data point dictionary
-        index: Index in array (for error messages)
-
-    Returns:
-        List of validation errors (empty if valid)
-    """
-    errors = []
-
-    required_fields = ['timestamp', 'fourHourUsed', 'weekUsed', 'opusWeekUsed']
-    for field in required_fields:
-        if field not in point:
-            errors.append(f"Historical data point {index} missing '{field}'")
-
-    # Validate timestamp format
-    if 'timestamp' in point:
-        if not isinstance(point['timestamp'], str):
-            errors.append(f"Historical data point {index} timestamp must be string")
-        else:
-            try:
-                datetime.fromisoformat(point['timestamp'].replace('Z', '+00:00'))
-            except (ValueError, AttributeError):
-                errors.append(f"Historical data point {index} has invalid timestamp format")
-
-    # Validate numeric fields
-    for field in ['fourHourUsed', 'weekUsed', 'opusWeekUsed']:
-        if field in point and not isinstance(point[field], (int, float)):
-            errors.append(f"Historical data point {index} {field} must be a number")
-        if field in point and point[field] < 0:
-            errors.append(f"Historical data point {index} {field} must be non-negative")
-
-    return errors
-
-
-def validate_usage_data(data: Dict[str, Any]) -> List[str]:
-    """
-    Validate the complete usage data structure.
-
-    Args:
-        data: Complete data dictionary
-
-    Returns:
-        List of validation errors (empty if valid)
-    """
-    errors = []
-
-    # Check top-level structure
-    required_top_level = ['lastUpdated', 'metrics', 'historicalData']
-    for field in required_top_level:
-        if field not in data:
-            errors.append(f"Missing required top-level field '{field}'")
-
-    # Validate lastUpdated
-    if 'lastUpdated' in data:
-        if not isinstance(data['lastUpdated'], str):
-            errors.append("lastUpdated must be a string (ISO 8601 format)")
-        else:
-            try:
-                datetime.fromisoformat(data['lastUpdated'].replace('Z', '+00:00'))
-            except (ValueError, AttributeError):
-                errors.append("lastUpdated has invalid ISO 8601 format")
-
-    # Validate metrics structure
-    if 'metrics' in data:
-        metrics = data['metrics']
-        if not isinstance(metrics, dict):
-            errors.append("metrics must be an object")
-        else:
-            required_caps = ['fourHourCap', 'weekCap', 'opusWeekCap']
-            for cap_name in required_caps:
-                if cap_name not in metrics:
-                    errors.append(f"metrics missing required cap '{cap_name}'")
-                else:
-                    errors.extend(validate_cap_structure(metrics[cap_name], cap_name))
-
-    # Validate historicalData
-    if 'historicalData' in data:
-        if not isinstance(data['historicalData'], list):
-            errors.append("historicalData must be an array")
-        else:
-            for i, point in enumerate(data['historicalData']):
-                errors.extend(validate_historical_data_point(point, i))
-
-    return errors
-
-
-def create_empty_data_structure() -> Dict[str, Any]:
-    """
-    Create an empty data structure with all required fields.
-
-    Returns:
-        Empty but valid data structure
-    """
-    return {
-        "lastUpdated": datetime.utcnow().isoformat() + 'Z',
-        "metrics": {
-            "fourHourCap": {
-                "used": 0,
-                "limit": 50,
-                "percentage": 0.0
+        Returns:
+            Empty schema dictionary with all required fields
+        """
+        return {
+            "schemaVersion": DataSchema.SCHEMA_VERSION,
+            "metadata": {
+                "created": datetime.utcnow().isoformat() + 'Z',
+                "lastUpdate": datetime.utcnow().isoformat() + 'Z',
+                "applicationVersion": "1.0.0",
+                "timezone": "UTC"
             },
-            "weekCap": {
-                "used": 0,
-                "limit": 1000,
-                "percentage": 0.0
-            },
-            "opusWeekCap": {
-                "used": 0,
-                "limit": 500,
-                "percentage": 0.0
+            "currentState": None,
+            "historicalData": [],
+            "alerts": {
+                "thresholds": {
+                    "warning": 75,
+                    "critical": 90
+                },
+                "active": []
             }
+        }
+
+    @staticmethod
+    def validate_schema(data: Dict[str, Any]) -> bool:
+        """
+        Validate that data matches expected schema.
+
+        Args:
+            data: Data dictionary to validate
+
+        Returns:
+            True if valid, False otherwise
+        """
+        try:
+            # Check required top-level fields
+            required_fields = ["schemaVersion", "metadata", "currentState", "historicalData"]
+            if not all(field in data for field in required_fields):
+                return False
+
+            # Check metadata fields
+            metadata_fields = ["lastUpdate", "applicationVersion"]
+            if not all(field in data["metadata"] for field in metadata_fields):
+                return False
+
+            # Check historicalData is a list
+            if not isinstance(data["historicalData"], list):
+                return False
+
+            # Validate historical data points
+            for point in data["historicalData"]:
+                required_point_fields = ["timestamp", "fourHour", "oneWeek", "opusOneWeek"]
+                if not all(field in point for field in required_point_fields):
+                    return False
+
+            return True
+
+        except (KeyError, TypeError):
+            return False
+
+    @staticmethod
+    def trim_historical_data(data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Trim historical data to maximum allowed points.
+
+        Args:
+            data: Data dictionary with historicalData array
+
+        Returns:
+            Data with trimmed historical data
+        """
+        if len(data.get("historicalData", [])) > DataSchema.MAX_HISTORICAL_POINTS:
+            data["historicalData"] = data["historicalData"][-DataSchema.MAX_HISTORICAL_POINTS:]
+        return data
+
+    @staticmethod
+    def recover_corrupted_json(filepath: Path) -> Optional[Dict[str, Any]]:
+        """
+        Attempt to recover from corrupted JSON file.
+
+        Strategies:
+        1. Check for backup file
+        2. Try to parse partial JSON
+        3. Return empty schema as last resort
+
+        Args:
+            filepath: Path to corrupted JSON file
+
+        Returns:
+            Recovered data or empty schema
+        """
+        backup_file = filepath.with_suffix('.json.bak')
+
+        # Try backup file first
+        if backup_file.exists():
+            print(f'⚠️  Attempting recovery from backup: {backup_file}')
+            try:
+                with open(backup_file, 'r') as f:
+                    data = json.load(f)
+                print('✅ Recovered from backup')
+                return data
+            except Exception as e:
+                print(f'❌ Backup also corrupted: {e}')
+
+        # No backup or backup failed - return empty schema
+        print('⚠️  Starting with empty schema')
+        return DataSchema.create_empty_schema()
+
+
+class AtomicWriter:
+    """Handles atomic writes to prevent data corruption."""
+
+    @staticmethod
+    def write_json(filepath: Path, data: Dict[str, Any], indent: int = 2) -> None:
+        """
+        Write JSON data atomically to file.
+
+        Uses atomic write to ensure file is never partially written,
+        preventing corruption from crashes or concurrent access.
+
+        Args:
+            filepath: Path to JSON file
+            data: Data dictionary to write
+            indent: JSON indentation (default 2 spaces)
+
+        Raises:
+            IOError: If write fails
+        """
+        # Ensure parent directory exists
+        filepath.parent.mkdir(parents=True, exist_ok=True)
+
+        # Write atomically
+        with atomic_write(str(filepath), overwrite=True) as f:
+            json.dump(data, f, indent=indent)
+
+    @staticmethod
+    def read_json(filepath: Path) -> Optional[Dict[str, Any]]:
+        """
+        Read JSON data from file.
+
+        Args:
+            filepath: Path to JSON file
+
+        Returns:
+            Data dictionary if successful, None if file doesn't exist or is invalid
+        """
+        if not filepath.exists():
+            return None
+
+        try:
+            with open(filepath, 'r') as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"⚠️  Failed to read JSON from {filepath}: {e}")
+            return None
+
+    @staticmethod
+    def merge_with_existing(
+        filepath: Path,
+        new_data: Dict[str, Any],
+        preserve_historical: bool = True
+    ) -> Dict[str, Any]:
+        """
+        Merge new data with existing data from file.
+
+        Args:
+            filepath: Path to existing JSON file
+            new_data: New data to merge
+            preserve_historical: Whether to preserve historical data array
+
+        Returns:
+            Merged data dictionary
+        """
+        existing = AtomicWriter.read_json(filepath)
+
+        if existing is None:
+            # No existing file, use new data as base
+            return new_data
+
+        # Preserve historical data if requested
+        if preserve_historical and "historicalData" in existing:
+            new_data["historicalData"] = existing.get("historicalData", [])
+
+        # Update metadata
+        if "metadata" not in new_data:
+            new_data["metadata"] = {}
+
+        new_data["metadata"]["lastUpdate"] = datetime.utcnow().isoformat() + 'Z'
+
+        # Preserve creation timestamp
+        if "created" in existing.get("metadata", {}):
+            new_data["metadata"]["created"] = existing["metadata"]["created"]
+
+        return new_data
+
+
+# Example usage functions
+def create_example_data_file(filepath: Path) -> None:
+    """Create an example data file for testing."""
+    example_data = {
+        "schemaVersion": "1.0.0",
+        "metadata": {
+            "created": "2025-11-08T00:00:00.000Z",
+            "lastUpdate": "2025-11-08T14:30:00.000Z",
+            "applicationVersion": "1.0.0",
+            "timezone": "UTC"
         },
-        "historicalData": []
+        "currentState": {
+            "fourHour": {
+                "usagePercent": 45.2,
+                "remaining": 54.8,
+                "resetTime": "2025-11-08T18:00:00.000Z",
+                "lastReset": "2025-11-08T14:00:00.000Z"
+            },
+            "oneWeek": {
+                "usagePercent": 68.5,
+                "remaining": 31.5,
+                "resetTime": "2025-11-15T00:00:00.000Z",
+                "lastReset": "2025-11-08T00:00:00.000Z"
+            },
+            "opusOneWeek": {
+                "usagePercent": 23.1,
+                "remaining": 76.9,
+                "resetTime": "2025-11-15T00:00:00.000Z",
+                "lastReset": "2025-11-08T00:00:00.000Z"
+            },
+            "timestamp": "2025-11-08T14:30:00.000Z"
+        },
+        "historicalData": [
+            {
+                "timestamp": "2025-11-08T14:00:00.000Z",
+                "fourHour": 45.2,
+                "oneWeek": 68.5,
+                "opusOneWeek": 23.1
+            },
+            {
+                "timestamp": "2025-11-08T14:05:00.000Z",
+                "fourHour": 45.5,
+                "oneWeek": 68.6,
+                "opusOneWeek": 23.1
+            }
+        ],
+        "alerts": {
+            "thresholds": {
+                "warning": 75,
+                "critical": 90
+            },
+            "active": []
+        }
     }
 
+    AtomicWriter.write_json(filepath, example_data)
+    print(f"✅ Example data file created: {filepath}")
 
-def is_valid_data(data: Dict[str, Any]) -> bool:
-    """
-    Check if data structure is valid.
+if __name__ == "__main__":
+    # Create example data file for testing
+    example_file = Path("data/usage-data-example.json")
+    create_example_data_file(example_file)
 
-    Args:
-        data: Data dictionary to validate
-
-    Returns:
-        True if valid, False otherwise
-    """
-    errors = validate_usage_data(data)
-    return len(errors) == 0
+    # Test validation
+    data = AtomicWriter.read_json(example_file)
+    if data and DataSchema.validate_schema(data):
+        print("✅ Schema validation passed")
+    else:
+        print("❌ Schema validation failed")

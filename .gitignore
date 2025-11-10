@@ -4,44 +4,38 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual environments
 venv/
-ENV/
 env/
+ENV/
+.venv
 
-# PyCharm
-.idea/
+# PyQt
+*.qm
 
-# VS Code
+# Project specific
+browser-data/
+data/usage-data.json
+*.log
+logs/
+
+# IDE
 .vscode/
+.idea/
+*.swp
+*.swo
 
-# Pytest
-.pytest_cache/
+desktop.ini
+
+# Temporary files
+*.tmp
+*.bak
+~*
+
+# Test coverage
 .coverage
 htmlcov/
-
-# Playwright
-browser-data/
+.pytest_cache/
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Data (exclude runtime data, keep fixtures)
-# data/*.json is committed for fixtures
