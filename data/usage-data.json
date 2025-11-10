@@ -1,41 +1,48 @@
 {
-  "lastUpdated": "2025-11-10T02:37:21.098606Z",
-  "metrics": {
-    "fourHourCap": {
-      "used": 7,
-      "limit": 100,
-      "percentage": 7.0,
-      "projections": {
-        "averageRatePerHour": 12.86,
-        "estimatedTimeToLimit": "2025-11-10T09:51:15.313422Z",
-        "confidence": "low",
-        "sma": 5.3
+  "schemaVersion": "1.0.0",
+  "metadata": {
+    "lastUpdate": "2025-11-10T02:37:21.098606Z",
+    "applicationVersion": "1.0.0"
+  },
+  "currentState": {
+    "metrics": {
+      "fourHourCap": {
+        "used": 7,
+        "limit": 100,
+        "percentage": 7.0,
+        "projections": {
+          "averageRatePerHour": 12.86,
+          "estimatedTimeToLimit": "2025-11-10T09:51:15.313422Z",
+          "confidence": "low",
+          "sma": 5.3
+        }
+      },
+      "weekCap": {
+        "used": 83,
+        "limit": 100,
+        "percentage": 83.0,
+        "projections": {
+          "averageRatePerHour": -315.86,
+          "estimatedTimeToLimit": null,
+          "confidence": "low",
+          "sma": 73.0,
+          "averageRatePerDay": -7580.64
+        }
+      },
+      "opusWeekCap": {
+        "used": 49,
+        "limit": 100,
+        "percentage": 49.0,
+        "projections": {
+          "averageRatePerHour": 49.71,
+          "estimatedTimeToLimit": "2025-11-10T03:38:54.520674Z",
+          "confidence": "low",
+          "sma": 13.6,
+          "averageRatePerDay": 1193.04
+        }
       }
     },
-    "weekCap": {
-      "used": 83,
-      "limit": 100,
-      "percentage": 83.0,
-      "projections": {
-        "averageRatePerHour": -315.86,
-        "estimatedTimeToLimit": null,
-        "confidence": "low",
-        "sma": 73.0,
-        "averageRatePerDay": -7580.64
-      }
-    },
-    "opusWeekCap": {
-      "used": 49,
-      "limit": 100,
-      "percentage": 49.0,
-      "projections": {
-        "averageRatePerHour": 49.71,
-        "estimatedTimeToLimit": "2025-11-10T03:38:54.520674Z",
-        "confidence": "low",
-        "sma": 13.6,
-        "averageRatePerDay": 1193.04
-      }
-    }
+    "timestamp": "2025-11-10T02:37:21.098606Z"
   },
   "historicalData": [
     {

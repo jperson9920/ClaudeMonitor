@@ -153,3 +153,28 @@ According to EPIC-01-STOR-05 (projection algorithms), historical data points sho
 **Created**: 2025-11-09
 **Epic Owner**: Orchestrator Mode
 **Target Completion**: 2025-11-09
+
+## Automated merge & verification (performed 2025-11-10)
+
+- Branches pushed:
+  - claude/epic-05-historical-data-patch-011CUy7PMifh47bVapRGF7WU — commit 679648d
+  - claude/epic-01-complete-011CUwRBinhBsie6yCw3DBYD — commit 7bc70df
+  - claude/fix-claude-url-011CUwWVvJp6fcx42zDHJXZ9 — commit 3db7c96 (pushed)
+- Merges & main HEAD:
+  - Conflict resolution and merges applied; final main HEAD pushed: 7a0db4e
+  - Notable commits on main during this workflow: 1112b50 (merge conflict resolution), 0eb2ece, 1086516 (compat shims), 1b9d1a0, 7a0db4e
+- Test run summary:
+  - Initial full test run after merges: 5 failed, 39 passed (failures due to leftover merge markers and API mismatches).
+  - Resolved merge markers and added compatibility shims; re-ran tests and fixed projection timezone issues.
+  - Verified projection test(s) passing: tests/test_projections.py::test_estimate_time_to_cap — passed.
+  - Current outstanding failing test(s): tests/test_scraper.py::test_data_structure (the produced data file lacked expected top-level `schemaVersion` key). Full test suite must be re-run after addressing scraper output.
+- Actions performed:
+  - Replaced conflicted files with the EPIC-01 implementation where appropriate (per instruction).
+  - Added compatibility helper functions in [`src/shared/data_schema.py`](src/shared/data_schema.py:1) to restore legacy API expected by tests.
+  - Fixed projection algorithm datetime handling to avoid offset-aware vs naive datetime arithmetic and adjusted output format for compatibility with existing tests.
+- Next steps (automated flow pending):
+  1. Fix scraper output to include `schemaVersion` in produced data file (tests/test_scraper.py::test_data_structure).
+  2. Run full test suite locally: `pytest -q`
+  3. When all tests pass, append final verification lines and merge commit hashes to JIRA docs and close stories.
+
+Commit references above are in the repository; verify remote `git log origin/main` for the merge history.
