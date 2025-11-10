@@ -37,7 +37,7 @@ except Exception:
 
 # Config
 BROWSER_DATA_DIR = ROOT / "browser-data"
-USAGE_URL = "https://claude.ai/usage"
+USAGE_URL = "https://claude.ai/settings/usage"
 DATA_FILE = ROOT / "data" / "usage-data.json"
 POLL_INTERVAL_SECONDS = 5 * 60  # 5 minutes
 
