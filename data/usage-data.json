@@ -1,0 +1,84 @@
+{
+  "lastUpdated": "2025-11-10T02:37:21.098606Z",
+  "metrics": {
+    "fourHourCap": {
+      "used": 7,
+      "limit": 100,
+      "percentage": 7.0,
+      "projections": {
+        "averageRatePerHour": 12.86,
+        "estimatedTimeToLimit": "2025-11-10T09:51:15.313422Z",
+        "confidence": "low",
+        "sma": 5.3
+      }
+    },
+    "weekCap": {
+      "used": 83,
+      "limit": 100,
+      "percentage": 83.0,
+      "projections": {
+        "averageRatePerHour": -315.86,
+        "estimatedTimeToLimit": null,
+        "confidence": "low",
+        "sma": 73.0,
+        "averageRatePerDay": -7580.64
+      }
+    },
+    "opusWeekCap": {
+      "used": 49,
+      "limit": 100,
+      "percentage": 49.0,
+      "projections": {
+        "averageRatePerHour": 49.71,
+        "estimatedTimeToLimit": "2025-11-10T03:38:54.520674Z",
+        "confidence": "low",
+        "sma": 13.6,
+        "averageRatePerDay": 1193.04
+      }
+    }
+  },
+  "historicalData": [
+    {
+      "timestamp": "2025-11-10T01:44:35.375336Z",
+      "fourHourUsed": 1,
+      "weekUsed": 200,
+      "opusWeekUsed": 9
+    },
+    {
+      "timestamp": "2025-11-10T01:50:26.598761Z",
+      "fourHourUsed": 1,
+      "weekUsed": 200,
+      "opusWeekUsed": 9
+    },
+    {
+      "timestamp": "2025-11-10T02:18:34.582250Z",
+      "fourHourUsed": 7,
+      "weekUsed": 7,
+      "opusWeekUsed": 7
+    },
+    {
+      "timestamp": "2025-11-10T02:31:12.220353Z",
+      "fourHourUsed": 7,
+      "weekUsed": 7,
+      "opusWeekUsed": 7
+    },
+    {
+      "timestamp": "2025-11-10T02:33:23.104679Z",
+      "fourHourUsed": 7,
+      "weekUsed": 7,
+      "opusWeekUsed": 7
+    },
+    {
+      "timestamp": "2025-11-10T02:35:00.434561Z",
+      "fourHourUsed": 7,
+      "weekUsed": 7,
+      "opusWeekUsed": 7
+    },
+    {
+      "timestamp": "2025-11-10T02:37:21.098606Z",
+      "fourHourUsed": 7,
+      "weekUsed": 83,
+      "opusWeekUsed": 49
+    }
+  ]
+}

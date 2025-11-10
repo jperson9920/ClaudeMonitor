@@ -1,0 +1,266 @@
+{
+  "timestamp": "2025-11-10T00:24:12.829011Z",
+  "candidates": [
+    {
+      "used": 7.0,
+      "limit": 8.0,
+      "percentage": 87.5,
+      "context": "78-aabf639ee69a/api.js\" as=\"script\" crossorigin=\"\" integrity=\"sha384-wgjgscu+1mf7/8hlzgteimpn7jy/wfccbdp1c24cmminheysaysu2usum9xnredk sha384-cvjbtpst416tb6gmtpkmlr",
+      "match_span": [
+        6737,
+        6740
+      ]
+    },
+    {
+      "used": 0.0,
+      "limit": 20.0,
+      "percentage": 0.0,
+      "context": "on-all duration-200 bg-bg-000 dark:bg-bg-200 border-0.5 border-accent-secondary-000/20 shadow-diffused shadow-[hsl(var(--accent-secondary-000)/10%)]\"><div class=\"mb-6",
+      "match_span": [
+        150607,
+        150613
+      ]
+    },
+    {
+      "used": 26.0,
+      "limit": 8.0,
+      "percentage": 325.0,
+      "context": "el}, you\u2019ll need to purchase {seatsneeded} additional {tierlabel} seats.\\\",\\\"/ub26/8zt9\\\":\\\"understand the risks\\\",\\\"/viagl4zvh\\\":\\\"discover ai-powered tools and ap",
+      "match_span": [
+        309710,
+        309714
+      ]
+    },
+    {
+      "used": 2.0,
+      "limit": 2.0,
+      "percentage": 100.0,
+      "context": "mlu3xgz\\\":\\\"plan photography shoots\\\",\\\"2+vodhagkt\\\":\\\"add custom connector\\\",\\\"2/2yg+qawp\\\":\\\"add\\\",\\\"20mr0misgy\\\":\\\"log in with code\\\",\\\"21lfyfocks\\\":\\\"all domai",
+      "match_span": [
+        319280,
+        319283
+      ]
+    },
+    {
+      "used": 92.0,
+      "limit": 223.0,
+      "percentage": 41.3,
+      "context": "\\\",\\\"3/kot/w/wx\\\":\\\"standard seats\\\",\\\"30xtnsnbge\\\":\\\"x-forwarded-email\\\",\\\"31se92/223\\\":\\\"{value, plural, one {#m} other {#m}}\\\",\\\"32rbnkp0z1\\\":\\\"terms of service\\\",",
+      "match_span": [
+        324190,
+        324196
+      ]
+    },
+    {
+      "used": 9.0,
+      "limit": 6.0,
+      "percentage": 150.0,
+      "context": "top claude\u2019s response\\\",\\\"5d0/b53+bk\\\":\\\"join proposal decision submitted\\\",\\\"5e9/6hmpoi\\\":\\\"referencing past chats...\\\",\\\"5fhoqfvi8v\\\":\\\"plan product launches\\\",\\",
+      "match_span": [
+        338338,
+        338341
+      ]
+    },
+    {
+      "used": 6.0,
+      "limit": 5.0,
+      "percentage": 120.0,
+      "context": "feguards against harmful outputs.\\\",\\\"6+olxjhhqg\\\":\\\"it's late-night {name}\\\",\\\"6/5xihdbh3\\\":\\\"create a personal project\\\",\\\"604zby50uj\\\":\\\"plan market research\\\",",
+      "match_span": [
+        340830,
+        340833
+      ]
+    },
+    {
+      "used": 8.0,
+      "limit": 5.0,
+      "percentage": 160.0,
+      "context": " you\u2019ll need to manually reassign them after the change takes effect.\\\",\\\"dbjb0z8/5t\\\":\\\"export your conversation data\\\",\\\"dd7a29ooxp\\\":\\\"back from pto... where di",
+      "match_span": [
+        380773,
+        380776
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 32.0,
+      "percentage": 3.1,
+      "context": " managers created with claude ai\\\",\\\"hhjmvsip2/\\\":\\\"invalid phone number\\\",\\\"hiz1/32exe\\\":\\\"github app is not installed\\\",\\\"hitm1x4c3y\\\":\\\"claude and slack\\\",\\\"hjwj",
+      "match_span": [
+        404420,
+        404424
+      ]
+    },
+    {
+      "used": 4.0,
+      "limit": 6845.0,
+      "percentage": 0.1,
+      "context": "pecmh\\\":\\\"locate documents that represent pivotal moments in my thinking\\\",\\\"wim4/6845i\\\":\\\"archive session\\\",\\\"wjgygsnfbd\\\":\\\"desktop extension enabled toggle\\\",\\\"wk",
+      "match_span": [
+        485315,
+        485321
+      ]
+    },
+    {
+      "used": 93.0,
+      "limit": 2.0,
+      "percentage": 4650.0,
+      "context": "jpz\\\":\\\"account deleted\\\",\\\"xtbfe9pkz5\\\":\\\"e.g., scim provisioning key\\\",\\\"xug3n93/2j\\\":\\\"unable to load user activity data. try again later.\\\",\\\"xugv50sps9\\\":\\\"{ti",
+      "match_span": [
+        493836,
+        493840
+      ]
+    },
+    {
+      "used": 8.0,
+      "limit": 26.0,
+      "percentage": 30.8,
+      "context": "t tiers.\\\",\\\"zpvtcash1z\\\":\\\"shipping address\\\",\\\"zro1i3apwm\\\":\\\"moving...\\\",\\\"zs8/26laiu\\\":\\\"enter the code sent via text to: {phonenumber}\\\",\\\"zsj27lbfz7\\\":\\\"when ",
+      "match_span": [
+        502765,
+        502769
+      ]
+    },
+    {
+      "used": 9.0,
+      "limit": 5.0,
+      "percentage": 180.0,
+      "context": "elop!\\\",\\\"cyr7khiuau\\\":\\\"back\\\",\\\"cywoxhro3/\\\":\\\"develop coding standards\\\",\\\"cz09/5alwg\\\":\\\"generate style from a starting point:\\\",\\\"d+xf455hwz\\\":\\\"whether our sy",
+      "match_span": [
+        523423,
+        523427
+      ]
+    },
+    {
+      "used": 9.0,
+      "limit": 1.0,
+      "percentage": 900.0,
+      "context": " limits\\\",\\\"eof+zsjr4t\\\":\\\"are you sure you want to delete this chat?\\\",\\\"eoktkz9/1x\\\":\\\"invent a coding language based on my favorite hobby\\\",\\\"epyapo9bij\\\":\\\"ver",
+      "match_span": [
+        533237,
+        533240
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 9.0,
+      "percentage": 11.1,
+      "context": "n\\\",\\\"f0o11lwnzu\\\":\\\"claude\u2019s responses weren\u2019t helpful or accurate enough\\\",\\\"f1/9b+4969\\\":\\\"limit reached - contact an admin to keep working\\\",\\\"f1o6m+b7f3\\\":\\\"a",
+      "match_span": [
+        534994,
+        534997
+      ]
+    },
+    {
+      "used": 95883.0,
+      "limit": 4.0,
+      "percentage": 2397075.0,
+      "context": "n admin.\\\",\\\"hd+zpqw8hl\\\":\\\"view instructions\\\",\\\"hdi+jmuhfd\\\":\\\"sort by\\\",\\\"hda95883/4\\\":\\\"type to edit memory\\\",\\\"hdq6bxvpmd\\\":\\\"sunday session?\\\",\\\"hdtzvw0sje\\\":\\\"g",
+      "match_span": [
+        546402,
+        546409
+      ]
+    },
+    {
+      "used": 6.0,
+      "limit": 91.0,
+      "percentage": 6.6,
+      "context": "w the terms of service\\\",\\\"kdruaxptqd\\\":\\\"claude model version not found.\\\",\\\"kf6/91lbar\\\":\\\"are you sure you\u2019d like to delete \\u003cb\\u003e{keyname}\\u003c/b\\u003e?",
+      "match_span": [
+        562979,
+        562983
+      ]
+    },
+    {
+      "used": 3.0,
+      "limit": 8.0,
+      "percentage": 37.5,
+      "context": "uto-reload\\\",\\\"lmxlibiguw\\\":\\\"connector named \u2018{name}\u2019 already exists\\\",\\\"ln8lif3/8t\\\":\\\"{enabled} of {total}\\\",\\\"loea+8c3n9\\\":\\\"let\u2019s work\\\",\\\"lpfumu324g\\\":\\\"comp",
+      "match_span": [
+        569723,
+        569726
+      ]
+    },
+    {
+      "used": 2.0,
+      "limit": 6.0,
+      "percentage": 33.3,
+      "context": "to check verification status.\\\",\\\"pdu4rzmvt5\\\":\\\"{fullname} ({email})\\\",\\\"pgacsv2/6h\\\":\\\"arguments\\\",\\\"pikk2bn+h0\\\":\\\"pause memory\\\",\\\"pj5l/knbdt\\\":\\\"this feature ",
+      "match_span": [
+        588718,
+        588721
+      ]
+    },
+    {
+      "used": 8.0,
+      "limit": 6.0,
+      "percentage": 133.3,
+      "context": "ay of code, a project by rick rubin in collaboration with anthropic.\\\",\\\"qqrdnby8/6\\\":\\\"by continuing, you acknowledge anthropic\u2019s \\u003cprivacylink\\u003eprivacy p",
+      "match_span": [
+        593233,
+        593236
+      ]
+    },
+    {
+      "used": 80.0,
+      "limit": 2.0,
+      "percentage": 4000.0,
+      "context": "an view and use this project\\\",\\\"r6p7klapjf\\\":\\\"contemplating, stand by...\\\",\\\"r80/2ffyeu\\\":\\\"open in drive\\\",\\\"r8yslktfdi\\\":\\\"installed on your computer\\\",\\\"r9ella",
+      "match_span": [
+        598438,
+        598442
+      ]
+    },
+    {
+      "used": 9.0,
+      "limit": 7.0,
+      "percentage": 128.6,
+      "context": "\",\\\"skwqttyoqq\\\":\\\"all members\\\",\\\"sluqtna6mp\\\":\\\"create something new\\\",\\\"snb9x9/7m6\\\":\\\"unable to confirm payment\\\",\\\"snlx74rswy\\\":\\\"you haven\u2019t used opus yet\\\",",
+      "match_span": [
+        603602,
+        603605
+      ]
+    },
+    {
+      "used": 3205.0,
+      "limit": 2.0,
+      "percentage": 160250.0,
+      "context": "\\\":\\\"report content\\\",\\\"vfn47uxioe\\\":\\\"claude code action not installed\\\",\\\"vixe3205/2\\\":\\\"private\\\",\\\"vlkhilkczk\\\":\\\"your name\\\",\\\"vlwqpahb9a\\\":\\\"built for real deve",
+      "match_span": [
+        622218,
+        622224
+      ]
+    },
+    {
+      "used": 7.0,
+      "limit": 8.0,
+      "percentage": 87.5,
+      "context": "data-callback=\"setupenforcement\" async=\"\" defer=\"\" integrity=\"sha384-wgjgscu+1mf7/8hlzgteimpn7jy/wfccbdp1c24cmminheysaysu2usum9xnredk sha384-cvjbtpst416tb6gmtpkmlr",
+      "match_span": [
+        733621,
+        733624
+      ]
+    }
+  ],
+  "mapped": {
+    "four": {
+      "used": 7.0,
+      "limit": 8.0,
+      "percentage": 87.5,
+      "context": "78-aabf639ee69a/api.js\" as=\"script\" crossorigin=\"\" integrity=\"sha384-wgjgscu+1mf7/8hlzgteimpn7jy/wfccbdp1c24cmminheysaysu2usum9xnredk sha384-cvjbtpst416tb6gmtpkmlr"
+    },
+    "week": {
+      "used": 0.0,
+      "limit": 20.0,
+      "percentage": 0.0,
+      "context": "on-all duration-200 bg-bg-000 dark:bg-bg-200 border-0.5 border-accent-secondary-000/20 shadow-diffused shadow-[hsl(var(--accent-secondary-000)/10%)]\"><div class=\"mb-6"
+    },
+    "opus": {
+      "used": 9.0,
+      "limit": 7.0,
+      "percentage": 128.6,
+      "context": "\",\\\"skwqttyoqq\\\":\\\"all members\\\",\\\"sluqtna6mp\\\":\\\"create something new\\\",\\\"snb9x9/7m6\\\":\\\"unable to confirm payment\\\",\\\"snlx74rswy\\\":\\\"you haven\u2019t used opus yet\\\","
+    }
+  },
+  "sample_text_window": "<!DOCTYPE html><html class=\"h-screen antialiased scroll-smooth __variable_f3a9a4 __variable_02000a __variable_e4ce97 __variable_e4195f\" lang=\"en-US\" data-theme=\"claude\" data-mode=\"light\" data-build-id=\"37b0090cc6\" data-env=\"\" data-cf-country=\"US\" data-org-plan=\"none\" style=\"\"><head><meta http-equiv=\"origin-trial\" content=\"A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgwODAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ==\"><link rel=\"stylesheet\" href=\"/_next/static/css/dd88639f40000b28.css\" nonce=\"\" data-precedence=\"next\"><link rel=\"stylesheet\" href=\"/_next/static/css/3ed1fd6af7fd36eb.css\" nonce=\"\" data-precedence=\"next\"><link rel=\"stylesheet\" href=\"/_next/static/css/d6bd087f08a7f52f.css\" nonce=\"\" data-precedence=\"next\"><link rel=\"stylesheet\" href=\"/_next/static/css/da25616fcf863192.css\" nonce=\"\" d"
+}
