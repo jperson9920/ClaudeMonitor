@@ -222,6 +222,152 @@ class AtomicWriter:
 
 
 # Example usage functions
+# Compatibility helpers (legacy function API) required by tests
+from typing import Union
+
+def _is_number(value: object) -> bool:
+    return isinstance(value, (int, float))
+
+def validate_cap_structure(cap_data: Dict[str, Any], cap_name: str) -> List[str]:
+    """
+    Backwards-compatible validator for a single cap structure.
+    Returns a list of human-readable error messages (empty if valid).
+    """
+    errors: List[str] = []
+
+    if not isinstance(cap_data, dict):
+        errors.append(f"{cap_name}: cap data must be an object")
+        return errors
+
+    # used
+    if 'used' not in cap_data:
+        errors.append(f"{cap_name}: missing 'used'")
+    else:
+        if not _is_number(cap_data['used']):
+            errors.append(f"{cap_name}: 'used' must be a number")
+
+    # limit
+    if 'limit' not in cap_data:
+        errors.append(f"{cap_name}: missing 'limit'")
+    else:
+        if not _is_number(cap_data['limit']):
+            errors.append(f"{cap_name}: 'limit' must be a number")
+
+    # percentage
+    if 'percentage' not in cap_data:
+        errors.append(f"{cap_name}: missing 'percentage'")
+    else:
+        pct = cap_data['percentage']
+        if not _is_number(pct):
+            errors.append(f"{cap_name}: percentage must be a number")
+        else:
+            if not (0 <= float(pct) <= 100):
+                errors.append(f"{cap_name}: percentage must be between 0 and 100")
+
+    return errors
+
+
+def validate_historical_data_point(point: Dict[str, Any], index: int) -> List[str]:
+    """
+    Validate a single historical data point. Returns list of errors.
+    """
+    errors: List[str] = []
+
+    required_fields = ['timestamp', 'fourHourUsed', 'weekUsed', 'opusWeekUsed']
+    for field in required_fields:
+        if field not in point:
+            errors.append(f"point[{index}]: missing '{field}'")
+
+    # Validate timestamp format (ISO 8601)
+    ts = point.get('timestamp')
+    if ts is not None:
+        try:
+            datetime.fromisoformat(str(ts).replace('Z', '+00:00'))
+        except Exception:
+            errors.append(f"point[{index}]: timestamp is not valid ISO 8601")
+
+    # Numeric and non-negative checks
+    for numeric_field in ['fourHourUsed', 'weekUsed', 'opusWeekUsed']:
+        val = point.get(numeric_field)
+        if val is None:
+            continue
+        if not _is_number(val):
+            errors.append(f"point[{index}]: {numeric_field} must be a number")
+        else:
+            if float(val) < 0:
+                errors.append(f"point[{index}]: {numeric_field} must be non-negative")
+
+    return errors
+
+
+def validate_usage_data(data: Dict[str, Any]) -> List[str]:
+    """
+    Validate the complete usage data structure. Returns list of errors.
+    """
+    errors: List[str] = []
+
+    if not isinstance(data, dict):
+        errors.append("data must be an object")
+        return errors
+
+    # lastUpdated
+    last_updated = data.get('lastUpdated')
+    if last_updated is None:
+        errors.append("missing 'lastUpdated'")
+    else:
+        try:
+            datetime.fromisoformat(str(last_updated).replace('Z', '+00:00'))
+        except Exception:
+            errors.append("lastUpdated must be ISO 8601")
+
+    # metrics
+    metrics = data.get('metrics')
+    if not isinstance(metrics, dict):
+        errors.append("missing 'metrics' or metrics must be an object")
+    else:
+        for cap_key in ['fourHourCap', 'weekCap', 'opusWeekCap']:
+            if cap_key not in metrics:
+                errors.append(f"{cap_key} missing in metrics")
+            else:
+                errors.extend(validate_cap_structure(metrics.get(cap_key, {}), cap_key))
+
+    # historicalData
+    hist = data.get('historicalData')
+    if hist is None:
+        errors.append("missing 'historicalData'")
+    elif not isinstance(hist, list):
+        errors.append("historicalData must be an array")
+    else:
+        for idx, point in enumerate(hist):
+            if isinstance(point, dict):
+                errors.extend(validate_historical_data_point(point, idx))
+            else:
+                errors.append(f"historicalData[{idx}] must be an object")
+
+    return errors
+
+
+def create_empty_data_structure() -> Dict[str, Any]:
+    """
+    Create an empty data structure compatible with legacy tests.
+    """
+    return {
+        'lastUpdated': datetime.utcnow().isoformat() + 'Z',
+        'metrics': {
+            'fourHourCap': {'used': 0, 'limit': 0, 'percentage': 0.0},
+            'weekCap': {'used': 0, 'limit': 0, 'percentage': 0.0},
+            'opusWeekCap': {'used': 0, 'limit': 0, 'percentage': 0.0}
+        },
+        'historicalData': []
+    }
+
+
+def is_valid_data(data: Dict[str, Any]) -> bool:
+    """
+    Convenience helper returning True if validate_usage_data returns no errors.
+    """
+    return len(validate_usage_data(data)) == 0
+
 def create_example_data_file(filepath: Path) -> None:
     """Create an example data file for testing."""
     example_data = {
