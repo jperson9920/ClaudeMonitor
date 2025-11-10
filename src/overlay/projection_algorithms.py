@@ -5,7 +5,7 @@ Implements SMA, linear regression, and time-to-cap estimation
 for predicting Claude usage trends.
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Dict, Any, Optional
 
 
@@ -94,8 +94,8 @@ def estimate_time_to_cap(
     if hours_to_cap < 0:
         return None
 
-    time_to_cap = datetime.utcnow() + timedelta(hours=hours_to_cap)
-    return time_to_cap.isoformat() + 'Z'
+    time_to_cap = datetime.now(timezone.utc) + timedelta(hours=hours_to_cap)
+    return time_to_cap.isoformat().replace('+00:00', 'Z')
 
 
 def calculate_projection_at_time(
@@ -118,7 +118,7 @@ def calculate_projection_at_time(
     """
     try:
         target_dt = datetime.fromisoformat(target_time.replace('Z', '+00:00'))
-        hours_until_target = (target_dt - datetime.utcnow()).total_seconds() / 3600
+        hours_until_target = (target_dt - datetime.now(timezone.utc)).total_seconds() / 3600
 
         if hours_until_target < 0:
             return current_usage
