@@ -35,6 +35,52 @@ class ClaudeUsageMonitor:
         self.page: Optional[Page] = None
         self.running = False
 
+        # Migrate any legacy on-disk data to the new schema so tests and consumers
+        # that read the file find the expected top-level keys.
+        self._migrate_existing_file()
+
+    def _migrate_existing_file(self) -> None:
+        """
+        Ensure existing on-disk data conforms to the expected schema.
+        If the file exists but lacks top-level keys (schemaVersion, metadata,
+        currentState, historicalData), transform it into the canonical shape.
+        """
+        try:
+            if not self.data_file.exists():
+                return
+
+            with open(self.data_file, 'r') as f:
+                raw = json.load(f)
+
+            # If already has schemaVersion, nothing to do
+            if isinstance(raw, dict) and 'schemaVersion' in raw:
+                return
+
+            # Legacy format detected — attempt to normalize
+            normalized = {
+                'schemaVersion': '1.0.0',
+                'metadata': {
+                    'lastUpdate': datetime.utcnow().isoformat() + 'Z',
+                    'applicationVersion': '1.0.0'
+                },
+                # If legacy used 'historicalData' as top-level, preserve it
+                'currentState': raw.get('currentState') if isinstance(raw, dict) else None,
+                'historicalData': raw.get('historicalData', []) if isinstance(raw, dict) else []
+            }
+
+            # If legacy file was a list or other structure, attempt best-effort conversion
+            if isinstance(raw, list):
+                normalized['historicalData'] = raw
+
+            # Overwrite with normalized structure atomically
+            with atomic_write(str(self.data_file), overwrite=True) as f:
+                json.dump(normalized, f, indent=2)
+
+            print(f'🔧 Migrated legacy data file to canonical schema: {self.data_file}')
+
+        except Exception as e:
+            print(f'⚠️  Failed to migrate existing data file: {e}')
+
     async def start(self) -> None:
         """Start the monitoring system."""
         async with async_playwright() as p:
@@ -238,7 +284,7 @@ class ClaudeUsageMonitor:
             except Exception as e:
                 print(f'⚠️  Failed to read existing data: {e}')
 
-        # Update data structure
+        # Build canonical data structure
         new_data = {
             'schemaVersion': '1.0.0',
             'metadata': {
@@ -249,13 +295,13 @@ class ClaudeUsageMonitor:
             'historicalData': existing.get('historicalData', [])
         }
 
-        # Add historical data point
+        # Add historical data point when poll succeeded
         if data.get('status') == 'success':
             new_data['historicalData'].append({
-                'timestamp': data['timestamp'],
-                'fourHour': data['fourHour']['usagePercent'],
-                'oneWeek': data['oneWeek']['usagePercent'],
-                'opusOneWeek': data['opusOneWeek']['usagePercent']
+                'timestamp': data.get('timestamp', datetime.utcnow().isoformat() + 'Z'),
+                'fourHour': data.get('fourHour', {}).get('usagePercent', 0),
+                'oneWeek': data.get('oneWeek', {}).get('usagePercent', 0),
+                'opusOneWeek': data.get('opusOneWeek', {}).get('usagePercent', 0)
             })
 
             # Keep only last week of data (2016 points = 7 days * 24 hours * 12 intervals)
