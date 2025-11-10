@@ -95,7 +95,9 @@ def estimate_time_to_cap(
         return None
 
     time_to_cap = datetime.now(timezone.utc) + timedelta(hours=hours_to_cap)
-    return time_to_cap.isoformat().replace('+00:00', 'Z')
+    # Return a naive ISO string (no timezone suffix) so tests that use
+    # datetime.utcnow() compare without mixing aware/naive datetimes.
+    return time_to_cap.replace(tzinfo=None).isoformat()
 
 
 def calculate_projection_at_time(
