@@ -1,136 +1,41 @@
 {
-  "lastUpdated": "2025-11-09T14:30:00Z",
+  "lastUpdated": "2025-11-10T01:30:18.641539Z",
   "metrics": {
     "fourHourCap": {
-      "used": 22,
-      "limit": 50,
-      "percentage": 44.0
+      "used": 1,
+      "limit": 2,
+      "percentage": 50.0,
+      "projections": {
+        "averageRatePerHour": -11.0,
+        "estimatedTimeToLimit": null,
+        "confidence": "low",
+        "sma": 6.1
+      }
     },
     "weekCap": {
-      "used": 387,
-      "limit": 1000,
-      "percentage": 38.7
+      "used": 200,
+      "limit": 40,
+      "percentage": 500.0,
+      "projections": {
+        "averageRatePerHour": 144.4,
+        "estimatedTimeToLimit": null,
+        "confidence": "low",
+        "sma": 66.2,
+        "averageRatePerDay": 3465.6
+      }
     },
     "opusWeekCap": {
-      "used": 145,
-      "limit": 500,
-      "percentage": 29.0
+      "used": 9,
+      "limit": 7,
+      "percentage": 128.6,
+      "projections": {
+        "averageRatePerHour": 6.4,
+        "estimatedTimeToLimit": null,
+        "confidence": "low",
+        "sma": 8.0,
+        "averageRatePerDay": 153.6
+      }
     }
   },
-  "historicalData": [
-    {
-      "timestamp": "2025-11-09T13:00:00Z",
-      "fourHourUsed": 15,
-      "weekUsed": 350,
-      "opusWeekUsed": 120
-    },
-    {
-      "timestamp": "2025-11-09T13:05:00Z",
-      "fourHourUsed": 16,
-      "weekUsed": 355,
-      "opusWeekUsed": 122
-    },
-    {
-      "timestamp": "2025-11-09T13:10:00Z",
-      "fourHourUsed": 17,
-      "weekUsed": 360,
-      "opusWeekUsed": 125
-    },
-    {
-      "timestamp": "2025-11-09T13:15:00Z",
-      "fourHourUsed": 18,
-      "weekUsed": 365,
-      "opusWeekUsed": 128
-    },
-    {
-      "timestamp": "2025-11-09T13:20:00Z",
-      "fourHourUsed": 18,
-      "weekUsed": 368,
-      "opusWeekUsed": 130
-    },
-    {
-      "timestamp": "2025-11-09T13:25:00Z",
-      "fourHourUsed": 19,
-      "weekUsed": 371,
-      "opusWeekUsed": 132
-    },
-    {
-      "timestamp": "2025-11-09T13:30:00Z",
-      "fourHourUsed": 19,
-      "weekUsed": 373,
-      "opusWeekUsed": 134
-    },
-    {
-      "timestamp": "2025-11-09T13:35:00Z",
-      "fourHourUsed": 20,
-      "weekUsed": 375,
-      "opusWeekUsed": 136
-    },
-    {
-      "timestamp": "2025-11-09T13:40:00Z",
-      "fourHourUsed": 20,
-      "weekUsed": 377,
-      "opusWeekUsed": 138
-    },
-    {
-      "timestamp": "2025-11-09T13:45:00Z",
-      "fourHourUsed": 21,
-      "weekUsed": 379,
-      "opusWeekUsed": 140
-    },
-    {
-      "timestamp": "2025-11-09T13:50:00Z",
-      "fourHourUsed": 21,
-      "weekUsed": 381,
-      "opusWeekUsed": 141
-    },
-    {
-      "timestamp": "2025-11-09T13:55:00Z",
-      "fourHourUsed": 21,
-      "weekUsed": 383,
-      "opusWeekUsed": 142
-    },
-    {
-      "timestamp": "2025-11-09T14:00:00Z",
-      "fourHourUsed": 21,
-      "weekUsed": 384,
-      "opusWeekUsed": 143
-    },
-    {
-      "timestamp": "2025-11-09T14:05:00Z",
-      "fourHourUsed": 22,
-      "weekUsed": 385,
-      "opusWeekUsed": 144
-    },
-    {
-      "timestamp": "2025-11-09T14:10:00Z",
-      "fourHourUsed": 22,
-      "weekUsed": 385,
-      "opusWeekUsed": 144
-    },
-    {
-      "timestamp": "2025-11-09T14:15:00Z",
-      "fourHourUsed": 22,
-      "weekUsed": 386,
-      "opusWeekUsed": 144
-    },
-    {
-      "timestamp": "2025-11-09T14:20:00Z",
-      "fourHourUsed": 22,
-      "weekUsed": 386,
-      "opusWeekUsed": 145
-    },
-    {
-      "timestamp": "2025-11-09T14:25:00Z",
-      "fourHourUsed": 22,
-      "weekUsed": 387,
-      "opusWeekUsed": 145
-    },
-    {
-      "timestamp": "2025-11-09T14:30:00Z",
-      "fourHourUsed": 22,
-      "weekUsed": 387,
-      "opusWeekUsed": 145
-    }
-  ]
+  "historicalData": []
 }
