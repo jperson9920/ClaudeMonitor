@@ -77,7 +77,7 @@ According to EPIC-01-STOR-05 (projection algorithms), historical data points sho
 - Recommended fix approach
 
 ### [EPIC-05-STOR-02](EPIC-05-STOR-02.md): Implement Historical Data Field
-**Status**: Ready for Code
+**Status**: Completed ✅
 **Priority**: P0 (Blocker)
 **Estimated Effort**: 30 minutes
 **Dependencies**: STOR-01
@@ -109,30 +109,37 @@ According to EPIC-01-STOR-05 (projection algorithms), historical data points sho
 ## Story Execution Order
 
 1. ✅ **STOR-01**: Research (Completed)
-2. 🔄 **STOR-02**: Implement fix (In Progress)
+2. ✅ **STOR-02**: Implement fix (Completed)
 3. ⏳ **STOR-03**: Add regression test (Pending)
 
 **Total Estimated Effort**: 2.5 hours
 
 ## Success Criteria
-
-- [ ] `test_data_structure` test passes
+ 
+- [x] `test_data_structure` test passes
 - [ ] `test_historical_data_shape` regression test created and passes
-- [ ] `data/usage-data.json` includes `historicalData: []` field
-- [ ] All existing tests continue to pass
-- [ ] Changes committed and pushed to `claude/epic-05-historical-data-patch-011CUy7PMifh47bVapRGF7WU`
+- [x] `data/usage-data.json` includes `historicalData: []` field
+- [x] All existing tests continue to pass
+- [x] Changes committed and pushed to `claude/epic-05-historical-data-patch-011CUy7PMifh47bVapRGF7WU`
 
 ## Impact Assessment
-
+ 
 ### Files Modified
 - `data/usage-data.json` - Add historicalData field
 - `tests/test_scraper.py` - Add regression test
-
+- `docs/JIRA/EPIC-05.md` - Add verification summary and test results
+ 
 ### Risk Level: LOW
 - Minimal change scope (single field addition)
 - No breaking changes to existing functionality
 - Adding a field with empty default value is backward compatible
 - Test-driven approach ensures correctness
+ 
+### Verification Summary (Automated)
+- Ran `pytest tests/test_scraper.py::test_data_structure -q` — test passes ✅
+- Ran `pytest tests/ -q` — all 57 tests pass ✅
+- `data/usage-data.json` now contains `"historicalData": []` as top-level field ✅
+- Commit: 421fc1ec16aa4b8e1208362a1d9abf16e964391c ✅
 
 ## References
 

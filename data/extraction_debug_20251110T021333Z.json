@@ -1,0 +1,379 @@
+{
+  "timestamp": "2025-11-10T02:13:33.783553Z",
+  "candidates": [
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "-all duration-200\">chats</div></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"></div></div",
+      "match_span": [
+        28951,
+        28954
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "\">chats</div></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"></div></div><div class=\"rela",
+      "match_span": [
+        28968,
+        28971
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "l duration-200\">projects</div></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"></div></div",
+      "match_span": [
+        31386,
+        31389
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "rojects</div></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"></div></div><div><div class=",
+      "match_span": [
+        31403,
+        31406
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "-center gap-2\">artifacts</div></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"></div></div",
+      "match_span": [
+        35619,
+        35622
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "tifacts</div></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"></div></div></div><div class",
+      "match_span": [
+        35636,
+        35639
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "city-0 -translate-x-0.5 transition-all duration-200 absolute block -right-4 top-1/2 -translate-y-1/2\"><path d=\"m198,64v168a6,6,0,0,1-12,0v78.48l68.24,196.24a6,6,0,",
+      "match_span": [
+        38108,
+        38111
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "-x-0.5 transition-all duration-200 absolute block -right-4 top-1/2 -translate-y-1/2\"><path d=\"m198,64v168a6,6,0,0,1-12,0v78.48l68.24,196.24a6,6,0,0,1-8.48-8.48l177",
+      "match_span": [
+        38125,
+        38128
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "1,198,64z\"></path></svg></div></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"></div></div",
+      "match_span": [
+        38325,
+        38328
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "></svg></div></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"></div></div></div><div class",
+      "match_span": [
+        38342,
+        38345
+      ]
+    },
+    {
+      "used": 200.0,
+      "limit": 40.0,
+      "percentage": 500.0,
+      "context": " select-none pl-2 sticky top-0 z-10 bg-gradient-to-b from-bg-200 from-50% to-bg-200/40 pointer-events-none\">recents</h3><ul class=\"flex flex-col gap-px\"><li style=\"op",
+      "match_span": [
+        38809,
+        38815
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": " library from plex to jellyfin</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        39933,
+        39936
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "x to jellyfin</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        39950,
+        39953
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "ing dashboard with predictions</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        42289,
+        42292
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "h predictions</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        42306,
+        42309
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "wn system for iphone to-do app</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        44652,
+        44655
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "one to-do app</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        44669,
+        44672
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "y setup with cloudflare tunnel</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        47012,
+        47015
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "dflare tunnel</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        47029,
+        47032
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "s=\"opacity-60\">untitled</span></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        49360,
+        49363
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "titled</span></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        49377,
+        49380
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "s=\"opacity-60\">untitled</span></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        51656,
+        51659
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "titled</span></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        51673,
+        51676
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": " search capabilities in vscode</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        53948,
+        53951
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "ies in vscode</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        53965,
+        53968
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "racker repair guide completion</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        56286,
+        56289
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "de completion</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        56303,
+        56306
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "tcher star adventurer firmware</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        58635,
+        58638
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "urer firmware</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        58652,
+        58655
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "ion with existing user profile</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        60987,
+        60990
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": " user profile</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        61004,
+        61007
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "ad directory file sorting tool</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        63338,
+        63341
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": " sorting tool</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        63355,
+        63358
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "ompts with jira task structure</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button cla",
+      "match_span": [
+        65702,
+        65705
+      ]
+    },
+    {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "ask structure</span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"><button class=\"inline-flex i",
+      "match_span": [
+        65719,
+        65722
+      ]
+    }
+  ],
+  "mapped": {
+    "four": {
+      "used": 1.0,
+      "limit": 2.0,
+      "percentage": 50.0,
+      "context": "-all duration-200\">chats</div></span></div></a><div class=\"absolute right-0 top-1/2 -translate-y-1/2 hidden group-hover:block group-focus-within:block\"></div></div",
+      "match_span": [
+        28951,
+        28954
+      ]
+    },
+    "week": {
+      "used": 200.0,
+      "limit": 40.0,
+      "percentage": 500.0,
+      "context": " select-none pl-2 sticky top-0 z-10 bg-gradient-to-b from-bg-200 from-50% to-bg-200/40 pointer-events-none\">recents</h3><ul class=\"flex flex-col gap-px\"><li style=\"op",
+      "match_span": [
+        38809,
+        38815
+      ]
+    },
+    "opus": null
+  },
+  "sample_text_window": "<!DOCTYPE html><html class=\"h-screen antialiased scroll-smooth __variable_f3a9a4 __variable_02000a __variable_e4ce97 __variable_e4195f\" lang=\"en-US\" data-theme=\"claude\" data-mode=\"light\" data-build-id=\"37b0090cc6\" data-env=\"\" data-cf-country=\"US\" data-org-plan=\"claude_max\" style=\"\"><head><meta http-equiv=\"origin-trial\" content=\"A7vZI3v+Gz7JfuRolKNM4Aff6zaGuT7X0mf3wtoZTnKv6497cVMnhy03KDqX7kBz/q/iidW7srW31oQbBt4VhgoAAACUeyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJEaXNhYmxlVGhpcmRQYXJ0eVN0b3JhZ2VQYXJ0aXRpb25pbmczIiwiZXhwaXJ5IjoxNzU3OTgwODAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ==\"><link rel=\"stylesheet\" href=\"/_next/static/css/dd88639f40000b28.css\" nonce=\"\" data-precedence=\"next\"><link rel=\"stylesheet\" href=\"/_next/static/css/3ed1fd6af7fd36eb.css\" nonce=\"\" data-precedence=\"next\"><link rel=\"stylesheet\" href=\"/_next/static/css/d6bd087f08a7f52f.css\" nonce=\"\" data-precedence=\"next\"><link rel=\"stylesheet\" href=\"/_next/static/css/da25616fcf863192.css\" nonc"
+}
