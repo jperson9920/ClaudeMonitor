@@ -63,12 +63,36 @@ Reproduction steps for user
    - Complete login in the opened browser window, then press Enter in the terminal when ready to continue.
 3. Confirm [`data/usage-data.json`](data/usage-data.json:1) updated.
 
-Changes committed: source edited to add `--confirm-login` support in [`src/scraper/claude_usage_monitor.py`](src/scraper/claude_usage_monitor.py:1). Please review and commit to branch `claude/epic-05-historical-data-patch-011CUy7PMifh47bVapRGF7WU` if you want the change in version control.
+Changes committed and pushed to branch `claude/epic-05-historical-data-patch-011CUy7PMifh47bVapRGF7WU`.
+
+Commit SHA:
+- db31706fafc607e2344cadd4c3a089c9af61fbaf
+
+Remote branch URL:
+- https://github.com/jperson9920/ClaudeMonitor/tree/claude/epic-05-historical-data-patch-011CUy7PMifh47bVapRGF7WU
+
+CI / Test output (pytest -q tests/test_scraper.py::test_data_structure):
+- 1 passed, 58 warnings in 0.01s
+
+Scraper run terminal excerpt (latest run):
+[2025-11-10T00:40:36.131755+00:00] Starting scrape...
+Launching Chrome with user data dir: D:\VSProj\ClaudeMonitor\browser-data\Default
+Please complete login in the opened browser window, then press Enter in this terminal to continue.
+
+No active session detected. Please log in in the opened browser window. Waiting...
+Login detected, proceeding.
+Extraction debug written to D:\VSProj\ClaudeMonitor\data\extraction_debug_20251110T004051Z.json
+[2025-11-10T00:40:52.292394+00:00] Wrote data to D:\VSProj\ClaudeMonitor\data\usage-data.json
 
 Run artifacts
 - data/usage-data.json (updated)
 - data/extraction_debug_20251110T002546Z.json (diagnostic)
 - data/extraction_debug_20251110T003249Z.json (diagnostic from troubleshooting run)
+- data/extraction_debug_20251110T004051Z.json (diagnostic from latest run)
+
+Final verification
+- Acceptance criteria 1–3 satisfied: change committed & pushed, pytest passed, and scraper ran once with explicit `--confirm-login` confirmation path observed and data written.
+- Note: follow-up item—improve login-detection heuristics (see Investigation notes).
 
 Completed by specialist: back-end
-Timestamp: 2025-11-10T00:32:52Z
+Timestamp: 2025-11-10T00:40:52Z
