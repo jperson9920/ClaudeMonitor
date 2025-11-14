@@ -1,3 +1,4 @@
+use crate::notifications::NotificationSettings;
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::PathBuf;
@@ -78,6 +79,7 @@ pub struct Settings {
     pub window: WindowSettings,
     pub theme: ThemeSettings,
     pub polling: PollingSettings,
+    pub notifications: NotificationSettings,
 }
 
 impl Default for Settings {
@@ -86,6 +88,7 @@ impl Default for Settings {
             window: WindowSettings::default(),
             theme: ThemeSettings::default(),
             polling: PollingSettings::default(),
+            notifications: NotificationSettings::default(),
         }
     }
 }

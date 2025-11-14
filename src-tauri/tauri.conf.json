@@ -28,6 +28,9 @@
         "setPosition": true,
         "setSize": true,
         "center": true
+      },
+      "notification": {
+        "all": true
       }
     },
     "bundle": {

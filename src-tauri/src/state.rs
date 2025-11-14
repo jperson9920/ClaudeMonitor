@@ -2,6 +2,7 @@ use std::sync::Arc;
 use std::time::Instant;
 use tokio::sync::Mutex;
 
+use crate::notifications::NotificationState;
 use crate::scraper::{ScraperInterface, UsageData};
 
 /// Polling state to track whether automatic polling is active
@@ -41,6 +42,9 @@ pub struct AppState {
 
     /// Last retrieved usage data
     pub last_data: Arc<Mutex<Option<UsageData>>>,
+
+    /// Notification state to track fired notifications
+    pub notification_state: Arc<NotificationState>,
 }
 
 impl AppState {
@@ -53,6 +57,7 @@ impl AppState {
             polling: Arc::new(Mutex::new(PollingState::new())),
             last_poll: Arc::new(Mutex::new(None)),
             last_data: Arc::new(Mutex::new(None)),
+            notification_state: Arc::new(NotificationState::new()),
         }
     }
 
@@ -74,6 +79,11 @@ impl AppState {
     /// Get a clone of the last data Arc for use in background tasks
     pub fn last_data_clone(&self) -> Arc<Mutex<Option<UsageData>>> {
         Arc::clone(&self.last_data)
+    }
+
+    /// Get a clone of the notification state Arc for use in background tasks
+    pub fn notification_state_clone(&self) -> Arc<NotificationState> {
+        Arc::clone(&self.notification_state)
     }
 }
 
