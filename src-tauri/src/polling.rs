@@ -4,6 +4,7 @@ use tauri::{AppHandle, Manager};
 use tokio::sync::Mutex;
 use tokio::time;
 
+use crate::database::Database;
 use crate::scraper::{ScraperInterface, UsageData};
 use crate::state::PollingState;
 
@@ -57,6 +58,13 @@ pub fn start_polling_task(
                     {
                         let mut last_data_guard = last_data.lock().await;
                         *last_data_guard = Some(data.clone());
+                    }
+
+                    // Record to database
+                    if let Ok(db) = Database::new(&app) {
+                        if let Err(e) = db.record_usage(&data) {
+                            eprintln!("Failed to record usage to database: {}", e);
+                        }
                     }
 
                     // Emit to frontend

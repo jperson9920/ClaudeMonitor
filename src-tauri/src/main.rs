@@ -1,12 +1,14 @@
 // Prevents additional console window on Windows in release mode
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod database;
 mod notifications;
 mod polling;
 mod scraper;
 mod settings;
 mod state;
 
+use database::{Database, UsageHistoryRecord, UsageStatistics};
 use settings::Settings;
 use state::AppState;
 use tauri::{
@@ -32,6 +34,7 @@ async fn manual_login(state: State<'_, AppState>) -> Result<String, String> {
 #[tauri::command]
 async fn poll_usage(
     state: State<'_, AppState>,
+    app: tauri::AppHandle,
 ) -> Result<scraper::UsageData, String> {
     let scraper = state.scraper.lock().await;
     let data = scraper.poll_usage().await?;
@@ -44,6 +47,11 @@ async fn poll_usage(
     {
         let mut last_poll = state.last_poll.lock().await;
         *last_poll = Some(std::time::Instant::now());
+    }
+
+    // Record to database
+    if let Ok(db) = Database::new(&app) {
+        let _ = db.record_usage(&data);
     }
 
     Ok(data)
@@ -131,6 +139,34 @@ async fn save_window_state(window: tauri::Window, app: tauri::AppHandle) -> Resu
     Ok(())
 }
 
+/// Get usage history for specified time range (in hours)
+#[tauri::command]
+fn get_usage_history(app: tauri::AppHandle, hours: i64) -> Result<Vec<UsageHistoryRecord>, String> {
+    let db = Database::new(&app)?;
+    db.get_history(hours)
+}
+
+/// Get usage statistics for specified time range (in hours)
+#[tauri::command]
+fn get_usage_statistics(app: tauri::AppHandle, hours: i64) -> Result<UsageStatistics, String> {
+    let db = Database::new(&app)?;
+    db.get_statistics(hours)
+}
+
+/// Export usage history as JSON
+#[tauri::command]
+fn export_usage_json(app: tauri::AppHandle, hours: i64) -> Result<String, String> {
+    let db = Database::new(&app)?;
+    db.export_json(hours)
+}
+
+/// Export usage history as CSV
+#[tauri::command]
+fn export_usage_csv(app: tauri::AppHandle, hours: i64) -> Result<String, String> {
+    let db = Database::new(&app)?;
+    db.export_csv(hours)
+}
+
 /// Create the system tray with menu items
 fn create_system_tray() -> SystemTray {
     let show = CustomMenuItem::new("show".to_string(), "Show Dashboard");
@@ -215,9 +251,18 @@ fn main() {
             set_always_on_top,
             load_settings,
             save_settings,
-            save_window_state
+            save_window_state,
+            get_usage_history,
+            get_usage_statistics,
+            export_usage_json,
+            export_usage_csv
         ])
         .setup(|app| {
+            // Initialize database
+            if let Err(e) = Database::new(&app.handle()) {
+                eprintln!("Warning: Failed to initialize database: {}", e);
+            }
+
             // Restore window position and size from settings
             let window = app.get_window("main").unwrap();
 

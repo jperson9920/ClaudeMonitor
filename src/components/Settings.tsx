@@ -187,6 +187,56 @@ export default function Settings({
             )}
           </div>
 
+          {/* Export & Data */}
+          <div className="settings-section">
+            <h3>Export & Data</h3>
+            <p style={{ fontSize: '13px', opacity: 0.8, marginBottom: '12px' }}>
+              Export your usage history data
+            </p>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <button
+                className="custom-colors-btn"
+                onClick={async () => {
+                  try {
+                    const { invoke } = await import("@tauri-apps/api/tauri");
+                    const csv = await invoke<string>("export_usage_csv", { hours: 24 * 30 });
+                    const blob = new Blob([csv], { type: 'text/csv' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `claude-usage-${new Date().toISOString().split('T')[0]}.csv`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  } catch (e) {
+                    console.error("Export failed:", e);
+                  }
+                }}
+              >
+                📊 Export CSV (30 days)
+              </button>
+              <button
+                className="custom-colors-btn"
+                onClick={async () => {
+                  try {
+                    const { invoke } = await import("@tauri-apps/api/tauri");
+                    const json = await invoke<string>("export_usage_json", { hours: 24 * 30 });
+                    const blob = new Blob([json], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `claude-usage-${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  } catch (e) {
+                    console.error("Export failed:", e);
+                  }
+                }}
+              >
+                📄 Export JSON (30 days)
+              </button>
+            </div>
+          </div>
+
           {/* Polling Settings */}
           <div className="settings-section">
             <h3>Polling</h3>
