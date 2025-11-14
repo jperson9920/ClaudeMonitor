@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { listen } from "@tauri-apps/api/event";
+import { appWindow } from "@tauri-apps/api/window";
+import { applyTheme, getThemeByName, ThemeColors } from "./themes";
+import Settings from "./components/Settings";
 import "./App.css";
 
 interface UsageData {
@@ -13,6 +16,29 @@ interface UsageData {
   last_updated: string;
 }
 
+interface Settings {
+  window: {
+    width: number;
+    height: number;
+    x: number | null;
+    y: number | null;
+    always_on_top: boolean;
+  };
+  theme: {
+    preset: string;
+    custom: {
+      primary_start: string;
+      primary_end: string;
+      accent: string;
+      warning: string;
+      critical: string;
+    };
+  };
+  polling: {
+    interval: number;
+  };
+}
+
 function App() {
   const [usageData, setUsageData] = useState<UsageData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -20,6 +46,17 @@ function App() {
   const [loggingIn, setLoggingIn] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [alwaysOnTop, setAlwaysOnTop] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState("default");
+  const [showSettings, setShowSettings] = useState(false);
+  const [customColors, setCustomColors] = useState<ThemeColors>({
+    primary_start: "#667eea",
+    primary_end: "#764ba2",
+    accent: "#22c55e",
+    warning: "#f97316",
+    critical: "#ef4444",
+  });
+  const [pollingInterval, setPollingInterval] = useState(300);
 
   // Check session and load data on mount
   useEffect(() => {
@@ -45,14 +82,60 @@ function App() {
         refreshUsage();
       });
 
+      const unlistenAlwaysOnTop = await listen<boolean>("always-on-top-changed", (event) => {
+        console.log("Always on top changed:", event.payload);
+        setAlwaysOnTop(event.payload);
+      });
+
       return () => {
         unlistenUpdate();
         unlistenError();
         unlistenRefresh();
+        unlistenAlwaysOnTop();
       };
     };
 
     setupListeners();
+  }, []);
+
+  // Load settings on mount
+  useEffect(() => {
+    loadSettings();
+  }, []);
+
+  // Save window state on resize/move (with debouncing)
+  useEffect(() => {
+    let saveTimeout: NodeJS.Timeout;
+
+    const saveWindowStateDebounced = () => {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(async () => {
+        try {
+          await invoke("save_window_state");
+          console.log("Window state saved");
+        } catch (err) {
+          console.error("Failed to save window state:", err);
+        }
+      }, 500); // Wait 500ms after last event before saving
+    };
+
+    const setupWindowListeners = async () => {
+      const unlistenResize = await appWindow.onResized(() => {
+        saveWindowStateDebounced();
+      });
+
+      const unlistenMove = await appWindow.onMoved(() => {
+        saveWindowStateDebounced();
+      });
+
+      return () => {
+        clearTimeout(saveTimeout);
+        unlistenResize();
+        unlistenMove();
+      };
+    };
+
+    setupWindowListeners();
   }, []);
 
   const checkSessionAndLoad = async () => {
@@ -137,6 +220,108 @@ function App() {
       console.log("Automatic polling started");
     } catch (err) {
       console.error("Failed to start polling:", err);
+    }
+  };
+
+  const loadSettings = async () => {
+    try {
+      const settings = await invoke<Settings>("load_settings");
+      console.log("Settings loaded:", settings);
+
+      // Load window settings
+      setAlwaysOnTop(settings.window.always_on_top);
+      await invoke("set_always_on_top", { enabled: settings.window.always_on_top });
+
+      // Load theme settings
+      const themeName = settings.theme.preset;
+      setCurrentTheme(themeName);
+      setCustomColors(settings.theme.custom);
+
+      if (themeName === "custom") {
+        applyTheme(settings.theme.custom);
+      } else {
+        const theme = getThemeByName(themeName);
+        if (theme) {
+          applyTheme(theme.colors);
+        }
+      }
+
+      // Load polling settings
+      setPollingInterval(settings.polling.interval);
+    } catch (err) {
+      console.error("Failed to load settings:", err);
+    }
+  };
+
+  const toggleAlwaysOnTop = async () => {
+    try {
+      const newValue = !alwaysOnTop;
+      await invoke("set_always_on_top", { enabled: newValue });
+      setAlwaysOnTop(newValue);
+
+      // Save to settings
+      const settings = await invoke<Settings>("load_settings");
+      settings.window.always_on_top = newValue;
+      await invoke("save_settings", { settings });
+    } catch (err) {
+      console.error("Failed to toggle always on top:", err);
+    }
+  };
+
+  const changeTheme = async (themeName: string) => {
+    try {
+      setCurrentTheme(themeName);
+
+      // Apply the theme
+      if (themeName === "custom") {
+        applyTheme(customColors);
+      } else {
+        const theme = getThemeByName(themeName);
+        if (theme) {
+          applyTheme(theme.colors);
+        }
+      }
+
+      // Save to settings
+      const settings = await invoke<Settings>("load_settings");
+      settings.theme.preset = themeName;
+      await invoke("save_settings", { settings });
+
+      console.log(`Theme changed to: ${themeName}`);
+    } catch (err) {
+      console.error("Failed to change theme:", err);
+    }
+  };
+
+  const handleCustomColorsChange = async (colors: ThemeColors) => {
+    try {
+      setCustomColors(colors);
+      applyTheme(colors);
+
+      // Save to settings
+      const settings = await invoke<Settings>("load_settings");
+      settings.theme.custom = colors;
+      settings.theme.preset = "custom";
+      await invoke("save_settings", { settings });
+
+      console.log("Custom colors saved");
+    } catch (err) {
+      console.error("Failed to save custom colors:", err);
+    }
+  };
+
+  const handlePollingIntervalChange = async (interval: number) => {
+    try {
+      setPollingInterval(interval);
+
+      // Save to settings
+      const settings = await invoke<Settings>("load_settings");
+      settings.polling.interval = interval;
+      await invoke("save_settings", { settings });
+
+      console.log(`Polling interval changed to: ${interval} seconds`);
+    } catch (err) {
+      console.error("Failed to save polling interval:", err);
     }
   };
 
@@ -271,8 +456,19 @@ function App() {
   return (
     <div className="app">
       <header>
-        <h1>Claude Usage Monitor</h1>
-        <p className="subtitle">Claude Max Plan</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h1>Claude Usage Monitor</h1>
+            <p className="subtitle">Claude Max Plan</p>
+          </div>
+          <button
+            onClick={() => setShowSettings(true)}
+            className="settings-btn"
+            title="Settings"
+          >
+            ⚙️
+          </button>
+        </div>
       </header>
 
       <div className="content">
@@ -356,6 +552,19 @@ function App() {
           {refreshing ? "⏳ Refreshing..." : "🔄 Refresh Now"}
         </button>
       </footer>
+
+      <Settings
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+        currentTheme={currentTheme}
+        onThemeChange={changeTheme}
+        alwaysOnTop={alwaysOnTop}
+        onAlwaysOnTopChange={toggleAlwaysOnTop}
+        customColors={customColors}
+        onCustomColorsChange={handleCustomColorsChange}
+        pollingInterval={pollingInterval}
+        onPollingIntervalChange={handlePollingIntervalChange}
+      />
     </div>
   );
 }

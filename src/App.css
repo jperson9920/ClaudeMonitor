@@ -13,19 +13,28 @@ body {
 }
 
 .app {
-  width: 450px;
-  height: 650px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--primary-start, #667eea) 0%, var(--primary-end, #764ba2) 100%);
   color: white;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
+/* CSS Variables for theming */
+:root {
+  --primary-start: #667eea;
+  --primary-end: #764ba2;
+  --accent: #22c55e;
+  --warning: #f97316;
+  --critical: #ef4444;
+  --overlay: rgba(255, 255, 255, 0.1);
+}
+
 /* Header */
 header {
   padding: 20px 24px;
-  text-align: center;
   background: rgba(0, 0, 0, 0.2);
 }
 
@@ -38,6 +47,59 @@ header h1 {
 .subtitle {
   font-size: 12px;
   opacity: 0.8;
+}
+
+.theme-selector {
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.theme-selector:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.theme-selector option {
+  background: #1f2937;
+  color: white;
+}
+
+.settings-btn {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.settings-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(45deg);
+}
+
+.pin-btn {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pin-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
 }
 
 /* Content Area */
@@ -95,15 +157,15 @@ header h1 {
 }
 
 .progress-fill.normal {
-  background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
+  background: linear-gradient(90deg, #4ade80 0%, var(--accent, #22c55e) 100%);
 }
 
 .progress-fill.warning {
-  background: linear-gradient(90deg, #fb923c 0%, #f97316 100%);
+  background: linear-gradient(90deg, #fb923c 0%, var(--warning, #f97316) 100%);
 }
 
 .progress-fill.critical {
-  background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(90deg, var(--critical, #ef4444) 0%, #dc2626 100%);
 }
 
 /* Metrics Grid */
@@ -172,18 +234,18 @@ header h1 {
 }
 
 .alert.warning {
-  background: rgba(251, 146, 60, 0.2);
-  border: 1px solid rgba(251, 146, 60, 0.4);
+  background: color-mix(in srgb, var(--warning, #f97316) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warning, #f97316) 40%, transparent);
 }
 
 .alert.critical {
-  background: rgba(239, 68, 68, 0.2);
-  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: color-mix(in srgb, var(--critical, #ef4444) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--critical, #ef4444) 40%, transparent);
 }
 
 .alert.error-alert {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: color-mix(in srgb, var(--critical, #ef4444) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--critical, #ef4444) 30%, transparent);
 }
 
 /* Last Updated */

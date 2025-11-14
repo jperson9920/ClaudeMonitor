@@ -23,7 +23,11 @@
         "hide": true,
         "show": true,
         "minimize": true,
-        "setFocus": true
+        "setFocus": true,
+        "setAlwaysOnTop": true,
+        "setPosition": true,
+        "setSize": true,
+        "center": true
       }
     },
     "bundle": {
@@ -52,10 +56,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": false,
+        "resizable": true,
         "title": "Claude Usage Monitor",
         "width": 450,
         "height": 650,
+        "minWidth": 400,
+        "minHeight": 500,
         "center": true,
         "decorations": true,
         "visible": true,
