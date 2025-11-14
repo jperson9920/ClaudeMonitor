@@ -18,7 +18,9 @@ A desktop widget that monitors your Claude.ai usage by scraping the claude.ai/se
 
 ## Development Status
 
-Currently implementing Epic 1: Python Web Scraper Foundation
+✅ **EPIC-01**: Python Web Scraper Foundation - COMPLETE
+✅ **EPIC-02**: Tauri Application Setup - COMPLETE
+🚧 **EPIC-03**: Rust-Python Integration - IN PROGRESS
 
 ## Quick Start
 
@@ -45,6 +47,21 @@ python claude_scraper.py --login
 
 # Test automated polling
 python claude_scraper.py
+```
+
+### Setup Tauri Application
+
+```bash
+# Install Node.js dependencies
+npm install
+
+# Run in development mode
+npm run tauri:dev
+
+# Build for production
+npm run tauri:build
+
+# Build artifacts will be in src-tauri/target/release/bundle/
 ```
 
 ## Project Structure
