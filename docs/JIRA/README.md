@@ -49,22 +49,19 @@ Notes:
 
 ## EPIC-09: End-to-End Testing & Validation
 - [`EPIC-09-STOR-01`](docs/JIRA/EPIC-09-STOR-01.md:1) — Create integration test plan and CI smoke tests — Status: TODO — Estimate: 4h — Depends: EPIC-02..EPIC-08
-- EPIC-09 additional stories to be added:
-  - [`EPIC-09-STOR-02`](docs/JIRA/EPIC-09-STOR-02.md:1) — (planned) Cloudflare simulation & performance measurement — Status: TODO
-  - [`EPIC-09-STOR-03`](docs/JIRA/EPIC-09-STOR-03.md:1) — (planned) Automated CI test jobs and thresholds — Status: TODO
+- [`EPIC-09-STOR-02`](docs/JIRA/EPIC-09-STOR-02.md:1) — Cloudflare simulation & performance measurement — Status: TODO — Estimate: 9h — Depends: EPIC-02..EPIC-08
+- [`EPIC-09-STOR-03`](docs/JIRA/EPIC-09-STOR-03.md:1) — Automated CI test jobs and thresholds — Status: TODO — Estimate: 5.5h — Depends: EPIC-09-STOR-01, EPIC-09-STOR-02
 
 ## EPIC-10: Distribution, Packaging & Security
-- EPIC-10 stories to be added:
-  - [`EPIC-10-STOR-01`](docs/JIRA/EPIC-10-STOR-01.md:1) — (planned) Build targets and Tauri packaging recipe — Status: TODO
-  - [`EPIC-10-STOR-02`](docs/JIRA/EPIC-10-STOR-02.md:1) — (planned) Security guidance: chrome-profile storage, file permissions, and optional encryption — Status: TODO
+- [`EPIC-10-STOR-01`](docs/JIRA/EPIC-10-STOR-01.md:1) — Build targets and Tauri packaging recipe — Status: TODO — Estimate: 7.5h — Depends: EPIC-06, EPIC-04
+- [`EPIC-10-STOR-02`](docs/JIRA/EPIC-10-STOR-02.md:1) — Security guidance: chrome-profile storage, file permissions, and optional encryption — Status: TODO — Estimate: 6h — Depends: EPIC-03, EPIC-06, EPIC-10-STOR-01
 
 ---
 
 Summary (current snapshot):
-- Epics processed: 9/10 (EPIC-10 pending story files)
-- Stories created: 26 files created so far
-- Remaining stories: EPIC-09 (2 planned), EPIC-10 (2 planned)
+- Epics processed: 10/10 (complete)
+- Stories created: 30 files
+- Remaining stories: none
 - Next steps:
-  - Create remaining EPIC-09 and EPIC-10 story files
   - Finalize index and run quality pass to ensure each story contains required sections
   - Hand off to Orchestrator for git operations (follow RooWrapper DryRun → Validate → Apply)
