@@ -14,6 +14,7 @@ except Exception:
     IntervalTrigger = None
 
 from .claude_scraper import ClaudeUsageScraper, DEFAULT_PROFILE_DIR
+from .storage import Storage
 
 # Try to import optional retry_handler.retry decorator
 try:
@@ -87,10 +88,17 @@ class ScraperScheduler:
                 "collected_at": collected_at,
                 "payload": payload,
             }
-            fname = os.path.join(DATA_DIR, f"usage_{datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')}.json")
-            with open(fname, "w", encoding="utf-8") as fh:
-                json.dump(record, fh, indent=2, ensure_ascii=False)
-            logger.info("Scrape succeeded, stored results to %s", fname)
+            # Persist using Storage backend
+            try:
+                storage = Storage()
+                scrape_id = storage.insert_scrape_result(record)
+                logger.info("Scrape succeeded, stored result id=%s db=%s", scrape_id, storage.db_path)
+            except Exception:
+                # Fallback to file write if DB is unavailable
+                fname = os.path.join(DATA_DIR, f"usage_{datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')}.json")
+                with open(fname, "w", encoding="utf-8") as fh:
+                    json.dump(record, fh, indent=2, ensure_ascii=False)
+                logger.exception("DB write failed; wrote results to file %s", fname)
             return record
         finally:
             if driver is not None:
