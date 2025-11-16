@@ -1,8 +1,12 @@
 """
-Claude usage scraper - high level orchestration.
+Claude usage scraper - high level orchestration with live browser support.
 
 Provides:
-- ClaudeUsageScraper.extract_usage_data() -> dict
+- ClaudeUsageScraper.extract_usage_data() -> dict (HTML-mode)
+- create_driver(headless=False) -> selenium webdriver (undetected-chromedriver)
+- manual_login() -> open headed browser, wait for user to authenticate and save session
+- navigate_to_usage() -> navigate and handle Cloudflare challenges
+- extract_live_data(driver) -> run extractor against live page_source
 - ClaudeUsageScraper.dump_json(path)
 - fallback helper extract_from_text(page_source)
 """
@@ -10,27 +14,162 @@ from typing import Dict, Any, List, Optional
 from datetime import datetime
 import json
 import re
+import os
+import time
+from pathlib import Path
+
+# Selenium / undetected-chromedriver imports
+try:
+    import undetected_chromedriver as uc
+    from selenium.common.exceptions import WebDriverException
+    from selenium.webdriver.common.by import By
+except Exception:
+    uc = None  # will raise at runtime if used
+    WebDriverException = Exception
+    By = None
 
 from .extractors import UsageExtractor
 from .models import UsageComponent
+from .session_manager import save_session, load_session
 
 PERCENT_RE = re.compile(r"(\d{1,3})\s*%")
+USAGE_URL = "https://claude.ai/settings/usage"
+DEFAULT_PROFILE_DIR = "./scraper/chrome-profile"
 
 class ClaudeUsageScraper:
     def __init__(self, html: str):
         self.html = html
         self.extractor = UsageExtractor(html)
 
+    @staticmethod
+    def create_driver(headless: bool = False, profile_path: str = DEFAULT_PROFILE_DIR):
+        """
+        Create an undetected-chromedriver instance configured for headed operation
+        (headless=False as required by EPIC-02-STOR-02) with anti-detection flags.
+
+        Note: caller must ensure undetected-chromedriver is installed.
+        """
+        if uc is None:
+            raise RuntimeError("undetected-chromedriver is not available; install undetected-chromedriver and selenium")
+
+        options = uc.ChromeOptions()
+        # Use a persistent user-data-dir so cookies/sessions can be preserved
+        profile_path = str(Path(profile_path).resolve())
+        options.add_argument(f"--user-data-dir={profile_path}")
+        # Headed mode per acceptance criteria
+        if headless:
+            options.add_argument("--headless=new")
+        # Anti-detection and pragmatic flags
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_argument("--no-first-run")
+        options.add_argument("--no-default-browser-check")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-extensions")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--window-size=1200,900")
+        # Realistic user agent may be set by user profile; leave default otherwise
+        # Use subprocess mode to improve compatibility on some Windows setups
+        try:
+            driver = uc.Chrome(options=options, use_subprocess=True)
+        except TypeError:
+            # Older uc versions may not accept use_subprocess kwarg
+            driver = uc.Chrome(options=options)
+        return driver
+
+    @staticmethod
+    def is_challenge_page(driver) -> bool:
+        """
+        Rudimentary Cloudflare challenge detection by looking for known phrases or short-circuit selectors.
+        """
+        try:
+            src = driver.page_source or ""
+            if "Checking your browser" in src or "Just a moment" in src or "Please enable JavaScript" in src:
+                return True
+            # Cloudflare sometimes displays an element with id="cf-challenge" or class "cf-browser-verification"
+            if By is not None:
+                try:
+                    if driver.find_elements(By.ID, "cf-challenge"):
+                        return True
+                    if driver.find_elements(By.CLASS_NAME, "cf-browser-verification"):
+                        return True
+                except Exception:
+                    pass
+            return False
+        except Exception:
+            return False
+
+    @classmethod
+    def navigate_to_usage(cls, driver, timeout: int = 60, poll: float = 2.0) -> bool:
+        """
+        Navigate to USAGE_URL and wait for Cloudflare challenge to resolve.
+        Returns True if navigation succeeded and page appears usable, False otherwise.
+        """
+        start = time.time()
+        try:
+            driver.get(USAGE_URL)
+        except WebDriverException:
+            # network/navigation error
+            return False
+
+        # Wait loop for challenge resolution
+        while time.time() - start < timeout:
+            if not cls.is_challenge_page(driver):
+                return True
+            time.sleep(poll)
+        return not cls.is_challenge_page(driver)
+
+    @classmethod
+    def manual_login(cls, driver=None, profile_path: str = DEFAULT_PROFILE_DIR) -> dict:
+        """
+        Open a headed browser for manual login and save session cookies.
+        Caller should instruct user not to close the browser window used by the scraper.
+        Returns saved session dict on success.
+        """
+        created = False
+        if driver is None:
+            driver = cls.create_driver(headless=False, profile_path=profile_path)
+            created = True
+
+        # Open the usage page which also serves as a login landing
+        driver.get(USAGE_URL)
+
+        # Wait for user to perform interactive login (CAPTCHA/2FA) and press Enter in terminal
+        print("Manual login required. Please authenticate in the opened browser window.")
+        print("Do NOT close the browser window used by the scraper. After login completes, press Enter here to continue.")
+        try:
+            input("Press Enter after login is complete...")
+        except KeyboardInterrupt:
+            # User cancelled
+            if created:
+                try:
+                    driver.quit()
+                except Exception:
+                    pass
+            raise
+
+        # Optionally wait a moment for redirects and cookie set
+        time.sleep(2)
+        # Save session cookies and metadata
+        save_session(driver)
+        return load_session()
+
+    @classmethod
+    def extract_live_data(cls, driver) -> Dict[str, Any]:
+        """
+        Extract usage data from the live page by reading page_source and delegating to UsageExtractor.
+        Returns same structured output as extract_usage_data() but constructed from live HTML.
+        """
+        page_source = driver.page_source or ""
+        extractor = UsageExtractor(page_source)
+        scraped = extractor.extract_all()
+        # Build a lightweight ClaudeUsageScraper instance from HTML to reuse normalization logic
+        inst = cls(page_source)
+        inst.extractor = extractor
+        return inst.extract_usage_data()
+
     def extract_usage_data(self) -> Dict[str, Any]:
         """
-        Returns a payload:
-        {
-          "components": [ {id,label,percent,raw_text,scraped_at}, ... ],
-          "found_components": int,
-          "status": "ok"|"partial"|"error",
-          "diagnostics": { "selectors_attempted": [...] },
-          "timestamp": ISO8601
-        }
+        Existing HTML-only extraction; kept for compatibility.
         """
         scraped = self.extractor.extract_all()
         components = []
