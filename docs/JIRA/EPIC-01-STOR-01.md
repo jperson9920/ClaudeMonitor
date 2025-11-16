@@ -46,6 +46,51 @@ Total: 4 hours
 - Research.md lines 181-201 (project initialization + venv & dependencies) [`docs/Research.md:181-201`]
 - EPIC-LIST.md lines 14-22 (EPIC-01 goal & acceptance criteria) [`docs/JIRA/EPIC-LIST.md:14-22`]
 
+## Phase 2: DOM Selector Extraction
+
+### Phase 2A: Automated Puppeteer Inspection (FAILED)
+**Date:** 2025-11-15
+**Approach:** Attempted automated puppeteer navigation to `https://claude.ai/settings/usage`
+**Result:** BLOCKED by Cloudflare challenge
+**Details:**
+- Cloudflare Ray ID: `99f3b35e1d6a9450`
+- Error: "Checking if the site connection is secure" challenge page
+- Root cause: Cloudflare bot detection blocks headless/automated browsers
+
+### Phase 2B: Manual DOM Inspection (CURRENT)
+**Date:** 2025-11-15
+**Approach:** User performs manual browser inspection to extract selectors
+**Status:** BLOCKED - awaiting user manual inspection
+
+**Created artifacts:**
+- [`docs/DOM-INSPECTION-GUIDE.md`](../DOM-INSPECTION-GUIDE.md) - Step-by-step manual inspection instructions
+- [`docs/selectors-template.yaml`](../selectors-template.yaml) - Template for user to fill with extracted selectors
+
+**Required selectors (3 components):**
+1. **Current session** - Session usage component (percentage, reset time)
+2. **Weekly limits — All models** - Weekly all-models usage (percentage, reset time)
+3. **Weekly limits — Opus only** - Weekly Opus-only usage (percentage, reset time)
+
+**Each component needs:**
+- Parent container CSS selector
+- XPath fallback selector
+- Percentage text selector (e.g., "75% used")
+- Reset time selector (e.g., "Resets in 59 min")
+- Screenshot and sample HTML
+
+**User action required:**
+1. Follow [`docs/DOM-INSPECTION-GUIDE.md`](../DOM-INSPECTION-GUIDE.md)
+2. Fill [`docs/selectors-template.yaml`](../selectors-template.yaml) with extracted values
+3. Validate selectors in browser DevTools console
+4. Rename `selectors-template.yaml` → `selectors.yaml`
+5. Update this story status to COMPLETED
+
 ## Risks & Open Questions
 - Risk: Developers may have different system package managers; docs must include both macOS/Linux/Windows variants (Research.md provides examples lines 139-156).
 - Open question: Should the repo include a pinned Node and Rust toolchain config files (.nvmrc, rust-toolchain)? Recommend adding; decision deferred to EPIC-01-STOR-02.
+- **NEW - Cloudflare bypass strategy:** How to bypass Cloudflare challenge in automated scraper?
+  - **Proposed solution:** Use `undetected-chromedriver` in headed mode with persistent session (as documented in [`Research.md`](../Research.md))
+  - **Implementation:** EPIC-02-STOR-01 (scraper core) will implement session persistence and Cloudflare bypass
+  - **Reference:** Research.md emphasizes using headed browser with manual authentication, then persistent cookies for subsequent automated runs
+  - **Owner:** To be addressed in EPIC-02 implementation phase
+  - **Workaround:** Manual selector extraction (Phase 2B) unblocks project setup while scraper implementation is pending

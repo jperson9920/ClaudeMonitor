@@ -1,0 +1,23 @@
+# Node
+node_modules/
+dist/
+
+# Rust
+target/
+
+# Python
+scraper-env/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Tauri
+src-tauri/target/
+
+# IDE
+.vscode/
+.idea/
+
+# Scraper
+scraper/chrome-profile/
+scraper/*.log
