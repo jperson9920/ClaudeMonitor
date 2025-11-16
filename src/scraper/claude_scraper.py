@@ -332,6 +332,12 @@ class ClaudeUsageScraper:
                     driver.quit()
                 except Exception:
                     pass
+                # EPIC-02-STOR-01: ensure post-quit cleanup to remove profile locks and terminate leftover Chrome processes
+                time.sleep(2)  # let Chrome exit and OS release handles
+                try:
+                    cleanup_profile_locks(profile_path)
+                except Exception:
+                    logger.exception("post-quit cleanup failed")
             raise
 
         # Optionally wait a moment for redirects and cookie set
@@ -509,6 +515,14 @@ if __name__ == "__main__":
                         driver.quit()
                 except Exception:
                     pass
+                # EPIC-02-STOR-01: post-quit cleanup to remove profile locks and terminate leftover Chrome processes
+                time.sleep(2)  # let Chrome exit and OS release handles
+                try:
+                    # derive profile path from driver when available; fall back to DEFAULT_PROFILE_DIR
+                    profile_path_to_clean = getattr(driver, "user_data_dir", None) or DEFAULT_PROFILE_DIR
+                    cleanup_profile_locks(profile_path_to_clean)
+                except Exception:
+                    logger.exception("post-quit cleanup failed")
 
         # If no recognized flag, show help
         parser.print_help()
