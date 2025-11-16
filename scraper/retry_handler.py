@@ -13,12 +13,12 @@ class RetryPolicy:
     max_delay: float = 60.0
 
 def with_retry(func: Callable[[], Any], policy: RetryPolicy, on_retry: Optional[Callable[[int, float, Exception], None]] = None) -> Any:
-    \"\"\"Execute func with exponential backoff retry logic.
-
+    """Execute func with exponential backoff retry logic.
+ 
     func: zero-arg callable that may raise exceptions on failure.
     policy: RetryPolicy controlling delays and attempts.
     on_retry: optional callback(attempt_number, delay_seconds, exception) for observability.
-    \"\"\"
+    """
     attempt = 0
     delay = policy.initial_delay
     last_exc: Optional[Exception] = None
@@ -31,17 +31,17 @@ def with_retry(func: Callable[[], Any], policy: RetryPolicy, on_retry: Optional[
             attempt += 1
             # If we've exhausted attempts, re-raise the last exception
             if attempt >= policy.max_attempts:
-                logger.error(\"with_retry: max attempts reached; re-raising\")
+                logger.error("with_retry: max attempts reached; re-raising")
                 raise
-
+ 
             # Call optional callback for instrumentation
             if on_retry:
                 try:
                     on_retry(attempt, delay, e)
                 except Exception:
-                    logger.exception(\"with_retry: on_retry callback raised an exception\")
-
-            logger.warning(f\"Retry {attempt}/{policy.max_attempts} after {delay}s: {e}\")
+                    logger.exception("with_retry: on_retry callback raised an exception")
+ 
+            logger.warning(f"Retry {attempt}/{policy.max_attempts} after {delay}s: {e}")
             time.sleep(delay)
             delay = min(delay * policy.multiplier, policy.max_delay)
 

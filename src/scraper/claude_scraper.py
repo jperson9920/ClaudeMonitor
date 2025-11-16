@@ -18,6 +18,7 @@ import os
 import time
 from pathlib import Path
 import logging
+import sys
 
 # Configure module-level logger for scraper diagnostics
 logger = logging.getLogger("scraper")
@@ -30,7 +31,7 @@ if not logger.handlers:
     logger.addHandler(_fh)
 
 def _sanitize_diagnostics(diag: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
-    \"\"\"Remove sensitive keys from diagnostics before emitting to stderr/logs.\"\"\"
+    """Remove sensitive keys from diagnostics before emitting to stderr/logs."""
     if diag is None:
         return None
     if not isinstance(diag, dict):
@@ -45,9 +46,9 @@ def _sanitize_diagnostics(diag: Optional[Dict[str, Any]]) -> Optional[Dict[str, 
     return sanitized
 
 def emit_error(error_code: str, message: str, details: str = None, diagnostics: dict = None, attempts: int = None) -> None:
-    \"\"\"Emit a structured JSON error to stderr and log the event.
+    """Emit a structured JSON error to stderr and log the event.
     Fields: error_code, message, details (optional), timestamp, attempts, diagnostics (sanitized).
-    \"\"\"
+    """
     err = {
         "error_code": error_code,
         "message": message,
@@ -63,7 +64,7 @@ def emit_error(error_code: str, message: str, details: str = None, diagnostics: 
     print(json.dumps(err, ensure_ascii=False), file=sys.stderr)
     sys.stderr.flush()
     # Also log an explanatory message (no sensitive data)
-    logger.error(f\"[{error_code}] {message} - details={details} attempts={attempts} diagnostics={bool(diagnostics)}\")
+    logger.error(f"[{error_code}] {message} - details={details} attempts={attempts} diagnostics={bool(diagnostics)}")
 
 # Selenium / undetected-chromedriver imports
 try:
@@ -78,7 +79,17 @@ except Exception:
 from .extractors import UsageExtractor
 from .models import UsageComponent
 from .session_manager import save_session, load_session
-from .retry_handler import RetryPolicy, with_retry
+# Support multiple execution layouts:
+# 1) Package/module import (e.g. `python -m src.scraper.claude_scraper`) -> relative import
+# 2) Project root/script import (e.g. `python src/scraper/claude_scraper.py`) -> absolute package import `scraper.retry_handler`
+# 3) Script executed from scraper/ directory (e.g. `python claude_scraper.py`) -> local module `retry_handler`
+try:
+    from .retry_handler import RetryPolicy, with_retry
+except Exception:
+    try:
+        from scraper.retry_handler import RetryPolicy, with_retry
+    except Exception:
+        from retry_handler import RetryPolicy, with_retry
 
 PERCENT_RE = re.compile(r"(\d{1,3})\s*%")
 USAGE_URL = "https://claude.ai/settings/usage"
@@ -350,7 +361,7 @@ class ClaudeUsageScraper:
 def extract_from_text(page_source: str) -> List[Dict[str, Any]]:
     """
     Fallback text extractor: returns list of found {raw_text, percent}
-    Uses regex to find all occurrences of '\d+% used' or '\d+%'.
+    Uses regex to find all occurrences of '\\d+% used' or '\\d+%'.
     """
     results = []
     for m in PERCENT_RE.finditer(page_source or ""):
@@ -410,17 +421,17 @@ if __name__ == "__main__":
                     ok = ClaudeUsageScraper.navigate_to_usage(driver, timeout=args.timeout, poll=2.0)
                     if not ok:
                         # navigate_to_usage attaches diagnostics to driver; raise to trigger retry
-                        raise RuntimeError(\"navigation_failed\")
+                        raise RuntimeError("navigation_failed")
                     return ClaudeUsageScraper.extract_live_data(driver)
 
                 try:
-                    data = with_retry(operation, policy, on_retry=lambda attempt, delay, exc: logger.warning(f\"poll_once retry {attempt} after {delay}s: {exc}\"))  # type: ignore
+                    data = with_retry(operation, policy, on_retry=lambda attempt, delay, exc: logger.warning(f"poll_once retry {attempt} after {delay}s: {exc}"))  # type: ignore
                     out_json(data)
                     sys.exit(0)
                 except Exception as e:
-                    logger.exception(\"poll_once failed after retries\")
-                    diag = getattr(driver, \"scraper_diagnostics\", None)
-                    emit_error(\"navigation_failed\", \"navigation or extraction failed after retries\", details=str(e), diagnostics=diag)
+                    logger.exception("poll_once failed after retries")
+                    diag = getattr(driver, "scraper_diagnostics", None)
+                    emit_error("navigation_failed", "navigation or extraction failed after retries", details=str(e), diagnostics=diag)
                     sys.exit(1)
             except Exception as e:
                 logger.exception("poll_once failed")
