@@ -1,0 +1,109 @@
+# Claude.ai Usage Selectors Template
+# Story: EPIC-01-STOR-01
+# Created: 2025-11-15
+# Status: PENDING manual inspection (see DOM-INSPECTION-GUIDE.md)
+
+selectors:
+  # Metadata
+  last_checked: "PENDING_MANUAL_INSPECTION"
+  inspection_status: "manual_required"
+  cloudflare_bypass: "User must authenticate manually - see DOM-INSPECTION-GUIDE.md"
+  
+  # Usage components (fill after manual inspection)
+  components:
+    # Component 1: Current session usage
+    - name: "Current session"
+      description: "Current session usage component - shows real-time usage within active session"
+      css_selector: "PENDING - User to fill after manual inspection"
+      xpath_fallback: "PENDING - User to fill after manual inspection"
+      percentage_selector: "PENDING - Selector for percentage text (e.g., '75% used')"
+      reset_time_selector: "PENDING - Selector for reset time text (e.g., 'Resets in 59 min')"
+      test_verified: false
+      screenshot: "usage-component-current-session.png"
+      sample_html: |
+        <!-- PENDING - User to paste sanitized HTML after manual inspection -->
+        <!-- Example structure:
+        <div class="usage-card">
+          <h3>Current session</h3>
+          <div class="percentage">75% used</div>
+          <div class="reset-time">Resets in 59 min</div>
+        </div>
+        -->
+      
+      # Expected data format
+      expected_output:
+        percentage: "float (0-100)"
+        reset_time: "string (e.g., 'Resets in 59 min', 'Resets in 3 hours')"
+        parsing_notes: "Extract numeric percentage, convert reset time to minutes"
+    
+    # Component 2: Weekly all-models usage
+    - name: "Weekly limits — All models"
+      description: "Weekly usage across all Claude models (Opus, Sonnet, Haiku)"
+      css_selector: "PENDING - User to fill after manual inspection"
+      xpath_fallback: "PENDING - User to fill after manual inspection"
+      percentage_selector: "PENDING - Selector for percentage text"
+      reset_time_selector: "PENDING - Selector for reset time text"
+      test_verified: false
+      screenshot: "usage-component-weekly-all.png"
+      sample_html: |
+        <!-- PENDING - User to paste sanitized HTML after manual inspection -->
+      
+      # Expected data format
+      expected_output:
+        percentage: "float (0-100)"
+        reset_time: "string (e.g., 'Resets in 3 hours', 'Resets Monday 12:00 AM')"
+        parsing_notes: "Extract numeric percentage, convert reset time to timestamp"
+    
+    # Component 3: Weekly Opus-only usage
+    - name: "Weekly limits — Opus only"
+      description: "Weekly usage specifically for Claude Opus model (most expensive tier)"
+      css_selector: "PENDING - User to fill after manual inspection"
+      xpath_fallback: "PENDING - User to fill after manual inspection"
+      percentage_selector: "PENDING - Selector for percentage text"
+      reset_time_selector: "PENDING - Selector for reset time text"
+      test_verified: false
+      screenshot: "usage-component-weekly-opus.png"
+      sample_html: |
+        <!-- PENDING - User to paste sanitized HTML after manual inspection -->
+      
+      # Expected data format
+      expected_output:
+        percentage: "float (0-100)"
+        reset_time: "string (e.g., 'Resets in 3 hours', 'Resets Monday 12:00 AM')"
+        parsing_notes: "Extract numeric percentage, convert reset time to timestamp"
+
+# Validation tests (run in browser console after filling selectors)
+validation:
+  test_commands:
+    - description: "Test CSS selector"
+      command: "document.querySelector('YOUR_CSS_SELECTOR')"
+      expected: "Should return HTML element, not null"
+    
+    - description: "Test XPath fallback"
+      command: "document.evaluate('YOUR_XPATH', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue"
+      expected: "Should return HTML element, not null"
+    
+    - description: "Test percentage selector"
+      command: "document.querySelector('YOUR_PERCENTAGE_SELECTOR')?.textContent"
+      expected: "Should return text like '75% used' or '100% used'"
+    
+    - description: "Test reset time selector"
+      command: "document.querySelector('YOUR_RESET_TIME_SELECTOR')?.textContent"
+      expected: "Should return text like 'Resets in 59 min' or 'Resets Monday 12:00 AM'"
+
+# Next steps after filling this template
+next_steps:
+  - step: "Complete manual inspection using DOM-INSPECTION-GUIDE.md"
+  - step: "Fill all PENDING values above with extracted selectors"
+  - step: "Run validation tests in browser DevTools console"
+  - step: "Capture screenshots and save to docs/screenshots/"
+  - step: "Rename this file to selectors.yaml (remove -template suffix)"
+  - step: "Update EPIC-01-STOR-01.md status to COMPLETED"
+  - step: "Proceed to EPIC-02-STOR-01 (scraper implementation)"
+
+# References
+references:
+  inspection_guide: "docs/DOM-INSPECTION-GUIDE.md"
+  story: "docs/JIRA/EPIC-01-STOR-01.md"
+  research: "docs/Research.md"
+  cloudflare_bypass_strategy: "Use undetected-chromedriver with persistent session (EPIC-02)"
