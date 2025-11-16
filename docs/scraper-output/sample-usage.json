@@ -1,0 +1,23 @@
+[
+  {
+    "component_id": "current_session",
+    "label": "Current session",
+    "percent": 3.0,
+    "raw_text": "3% used",
+    "scraped_at": "2025-11-16T04:19:56.166003Z"
+  },
+  {
+    "component_id": "weekly_all_models",
+    "label": "All models",
+    "percent": 36.0,
+    "raw_text": "36% used",
+    "scraped_at": "2025-11-16T04:19:56.166284Z"
+  },
+  {
+    "component_id": "weekly_opus",
+    "label": "Opus only",
+    "percent": 19.0,
+    "raw_text": "19% used",
+    "scraped_at": "2025-11-16T04:19:56.166383Z"
+  }
+]
