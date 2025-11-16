@@ -95,6 +95,68 @@ PERCENT_RE = re.compile(r"(\d{1,3})\s*%")
 USAGE_URL = "https://claude.ai/settings/usage"
 DEFAULT_PROFILE_DIR = "./scraper/chrome-profile"
 
+def cleanup_profile_locks(profile_path: str) -> None:
+    """Clean up Chrome profile locks by killing zombie processes and removing lock files.
+    
+    This fixes the 'session not created: cannot connect to chrome' error caused by
+    previous Chrome instances that crashed or were not properly cleaned up.
+    """
+    if not profile_path:
+        return
+    
+    profile_path = str(Path(profile_path).resolve())
+    logger.debug(f'Cleaning up profile locks for: {profile_path}')
+    
+    # Step 1: Kill zombie Chrome/chromedriver processes
+    try:
+        import psutil
+        killed_count = 0
+        for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+            try:
+                cmdline = proc.info.get('cmdline') or []
+                cmdline_str = ' '.join(cmdline).lower()
+                
+                if ('chrome' in proc.info['name'].lower() or 'chromedriver' in proc.info['name'].lower()):
+                    if profile_path.lower() in cmdline_str:
+                        logger.warning(f"Killing zombie process: {proc.info['name']} (PID {proc.info['pid']})")
+                        try:
+                            proc.kill()
+                            proc.wait(timeout=5)
+                            killed_count += 1
+                        except (psutil.NoSuchProcess, psutil.TimeoutExpired):
+                            pass
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
+        
+        if killed_count > 0:
+            logger.info(f'Killed {killed_count} zombie Chrome/chromedriver process(es)')
+            import time
+            time.sleep(1)
+    except ImportError:
+        logger.warning('psutil not available; skipping process cleanup')
+    
+    # Step 2: Remove lock files
+    profile_dir = Path(profile_path)
+    if not profile_dir.exists():
+        return
+    
+    lock_files = ['lockfile', 'SingletonLock', 'SingletonSocket', 'SingletonCookie']
+    removed_count = 0
+    
+    for lock_name in lock_files:
+        lock_path = profile_dir / lock_name
+        if lock_path.exists():
+            try:
+                lock_path.unlink()
+                removed_count += 1
+                logger.debug(f'Removed lock file: {lock_name}')
+            except Exception as e:
+                logger.warning(f'Failed to remove {lock_name}: {e}')
+    
+    if removed_count > 0:
+        logger.info(f'Removed {removed_count} lock file(s) from profile directory')
+
+
 class ClaudeUsageScraper:
     def __init__(self, html: str):
         self.html = html
@@ -110,6 +172,9 @@ class ClaudeUsageScraper:
         """
         if uc is None:
             raise RuntimeError("undetected-chromedriver is not available; install undetected-chromedriver and selenium")
+        # Clean up any zombie processes and lock files before creating driver
+        cleanup_profile_locks(profile_path)
+
 
         options = uc.ChromeOptions()
         # Use a persistent user-data-dir so cookies/sessions can be preserved
