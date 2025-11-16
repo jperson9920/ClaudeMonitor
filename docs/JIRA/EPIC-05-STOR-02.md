@@ -4,7 +4,7 @@ Title: Implement ProgressBar and ResetTimer UI components
 
 Epic: [`EPIC-05`](docs/JIRA/EPIC-LIST.md:54)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a frontend developer I need reusable UI components for the progress bar and reset countdown so the dashboard shows usage percentage and time-until-reset consistently.

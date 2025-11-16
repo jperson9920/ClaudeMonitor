@@ -4,7 +4,20 @@ Title: Define bundling strategy and resource resolution for Python scraper
 
 Epic: [`EPIC-06`](docs/JIRA/EPIC-LIST.md:64)
 
-Status: TODO
+Status: DONE
+
+## Implementation notes
+- Added [`src-tauri/src/resource.rs`](src-tauri/src/resource.rs:1) implementing `pub fn resolve_scraper_path() -> Result<PathBuf, String>` with:
+  - Env override via `CLAUDE_SCRAPER_PATH`
+  - Test/mock hook via `TAURI_RESOURCE_DIR_MOCK`
+  - Bundled resolution using `tauri::api::path::resource_dir()`
+  - Development fallback to `../scraper/claude_scraper.py`
+- Updated [`src-tauri/src/scraper.rs`](src-tauri/src/scraper.rs:1) to call `resolve_scraper_path()` and branch:
+  - `.py` -> spawn `python <script>`
+  - executable -> run directly, set working dir to parent
+- Created docs: [`docs/JIRA/BUNDLING.md`](docs/JIRA/BUNDLING.md:1) with strategies, PyInstaller example and troubleshooting
+- Added unit tests: [`src-tauri/tests/test_resource_resolution.rs`](src-tauri/tests/test_resource_resolution.rs:1) covering override, mocked resource_dir, and dev fallback.
+- Mapped resource resolution failures to `ScraperError::Execution` with actionable diagnostics.
 
 ## Description
 As a release engineer, I need a clear bundling strategy so the Tauri/Rust app can locate and invoke the Python scraper in both development and bundled distributions. This story documents options (bundle Python via PyInstaller or require system Python), defines resource resolution code paths, and implements a Rust helper that resolves scraper executable path at runtime.

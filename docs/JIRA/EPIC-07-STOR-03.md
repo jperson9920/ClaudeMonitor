@@ -4,7 +4,7 @@ Title: Polling configuration, persistence and startup behavior
 
 Epic: [`EPIC-07`](docs/JIRA/EPIC-LIST.md:74)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a user and operator I need configurable polling interval, persisted settings, and clear startup behavior so the widget resumes the expected polling state across restarts and obeys the 5-minute default polling frequency described in Research.md.

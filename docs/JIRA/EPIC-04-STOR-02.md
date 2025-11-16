@@ -4,7 +4,7 @@ Title: Implement ScraperInterface in Rust to spawn Python subprocess and parse J
 
 Epic: [`EPIC-04`](docs/JIRA/EPIC-LIST.md:44)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a backend engineer, I need a concrete ScraperInterface in Rust that reliably spawns the Python scraper subprocess, enforces the stdout/stderr protocol, parses JSON output, and returns structured serde_json::Value so the Tauri app can consume usage data.

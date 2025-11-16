@@ -4,7 +4,7 @@ Title: Implement exponential backoff retry handler and integration points
 
 Epic: [`EPIC-08`](docs/JIRA/EPIC-LIST.md:84)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a backend engineer, I need a reusable exponential-backoff retry handler so transient scraper failures (navigation timeouts, Cloudflare momentary blocks) are retried automatically with configurable parameters. The handler will be used by the Python scraper and by the Rust poller when appropriate.

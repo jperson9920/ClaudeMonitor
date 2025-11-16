@@ -4,7 +4,7 @@ Title: Create src-tauri Rust project skeleton and command stubs
 
 Epic: [`EPIC-04`](docs/JIRA/EPIC-LIST.md:44)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a developer I need a Tauri Rust backend skeleton with command stubs so the frontend can call backend commands and the Rust project compiles. This establishes the IPC surface and provides placeholders for scraper process management and polling logic.

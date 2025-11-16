@@ -4,7 +4,7 @@ Title: Define structured error codes, diagnostics schema and logging format
 
 Epic: [`EPIC-08`](docs/JIRA/EPIC-LIST.md:84)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As an engineer, I need a documented set of structured error codes and a diagnostics JSON schema so both the Python scraper and Rust backend surface consistent, machine- and human-readable errors to the frontend and logs. This enables clear UI messages and automated handling (e.g., session_required → prompt login).

@@ -4,7 +4,7 @@ Title: Wire frontend to Rust backend commands and system tray events
 
 Epic: [`EPIC-05`](docs/JIRA/EPIC-LIST.md:54)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a frontend developer I need the React UI wired to the Rust backend commands and system tray events so users can trigger manual refresh, manual login, start/stop polling, and receive `usage-update` and `usage-error` events from the backend.

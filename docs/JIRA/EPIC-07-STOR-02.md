@@ -4,7 +4,7 @@ Title: Implement force-refresh command and visibility window policy for scraper 
 
 Epic: [`EPIC-07`](docs/JIRA/EPIC-LIST.md:74)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a user I need a force-refresh mechanism that triggers an immediate poll outside the regular schedule and a clear visibility-window policy so the headed browser is only visible briefly (5–10s) during automated polls or when manual login is active.

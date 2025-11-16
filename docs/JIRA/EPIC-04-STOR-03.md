@@ -4,7 +4,7 @@ Title: Implement polling manager and IPC events (start_polling/stop_polling, usa
 
 Epic: [`EPIC-04`](docs/JIRA/EPIC-LIST.md:44)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a backend engineer, I need the Rust polling manager to start/stop a background task that invokes the scraper at a configurable interval (default 300s) and emits Tauri events (`usage-update`, `usage-error`) with parsed JSON so the frontend and system tray can react in real time.

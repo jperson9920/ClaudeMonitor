@@ -4,7 +4,7 @@ Title: Implement system tray menu and basic UI actions
 
 Epic: [`EPIC-07`](docs/JIRA/EPIC-LIST.md:74)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a user I need a system tray menu to control the widget without the main window. The tray must provide Show Dashboard, Refresh Now, and Quit actions and wire these to Rust backend commands so users can quickly force-refresh or open the UI.

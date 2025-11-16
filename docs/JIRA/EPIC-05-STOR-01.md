@@ -4,7 +4,7 @@ Title: Implement frontend UsageDisplay component and data model
 
 Epic: [`EPIC-05`](docs/JIRA/EPIC-LIST.md:54)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a frontend developer, I need a React component that receives parsed usage JSON from the Rust backend and renders the three usage components (percentage, progress bar, reset timer, last_updated) so users can view current Claude usage at a glance.

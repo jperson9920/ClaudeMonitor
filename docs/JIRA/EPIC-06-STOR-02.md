@@ -4,7 +4,18 @@ Title: Implement Rust bundling support for scraper resources and launcher
 
 Epic: [`EPIC-06`](docs/JIRA/EPIC-LIST.md:64)
 
-Status: TODO
+Status: DONE
+
+## Implementation notes
+- Implemented `src-tauri/src/resource.rs` exposing `pub fn resolve_scraper_path() -> Result<PathBuf, String>` (see [`src-tauri/src/resource.rs`](src-tauri/src/resource.rs:1)).
+- Updated launcher in [`src-tauri/src/scraper.rs`](src-tauri/src/scraper.rs:1) to:
+  - Resolve scraper path and validate UTF-8
+  - Launch `python <path>` when `.py` script is detected
+  - Launch bundled executable directly otherwise
+  - Set working directory to scraper parent directory
+  - Return `ScraperError::Execution` with helpful messages on failure
+- Added tests in [`src-tauri/tests/test_resource_resolution.rs`](src-tauri/tests/test_resource_resolution.rs:1) using `TAURI_RESOURCE_DIR_MOCK` to simulate bundle layout and `CLAUDE_SCRAPER_PATH` override.
+- Documented env override and troubleshooting in [`docs/JIRA/BUNDLING.md`](docs/JIRA/BUNDLING.md:1).
 
 ## Description
 As a release engineer, I need the Rust backend to locate and invoke the scraper whether it's a source `.py` script during development or a bundled executable in production. This story implements resource resolution and launcher logic in `src-tauri/src/scraper.rs` and `src-tauri/src/resource.rs` and documents the runtime behavior.

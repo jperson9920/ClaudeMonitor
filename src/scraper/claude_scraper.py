@@ -29,6 +29,42 @@ if not logger.handlers:
     _fh.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
     logger.addHandler(_fh)
 
+def _sanitize_diagnostics(diag: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    \"\"\"Remove sensitive keys from diagnostics before emitting to stderr/logs.\"\"\"
+    if diag is None:
+        return None
+    if not isinstance(diag, dict):
+        return diag
+    sanitized = {}
+    sensitive_keys = {"cookies", "set_cookie", "authorization", "auth", "token", "session"}
+    for k, v in diag.items():
+        if k.lower() in sensitive_keys:
+            sanitized[k] = "<redacted>"
+        else:
+            sanitized[k] = v
+    return sanitized
+
+def emit_error(error_code: str, message: str, details: str = None, diagnostics: dict = None, attempts: int = None) -> None:
+    \"\"\"Emit a structured JSON error to stderr and log the event.
+    Fields: error_code, message, details (optional), timestamp, attempts, diagnostics (sanitized).
+    \"\"\"
+    err = {
+        "error_code": error_code,
+        "message": message,
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+    }
+    if details:
+        err["details"] = str(details)
+    if attempts is not None:
+        err["attempts"] = attempts
+    if diagnostics:
+        err["diagnostics"] = _sanitize_diagnostics(diagnostics)
+    # Print to stderr for the Rust backend to parse
+    print(json.dumps(err, ensure_ascii=False), file=sys.stderr)
+    sys.stderr.flush()
+    # Also log an explanatory message (no sensitive data)
+    logger.error(f\"[{error_code}] {message} - details={details} attempts={attempts} diagnostics={bool(diagnostics)}\")
+
 # Selenium / undetected-chromedriver imports
 try:
     import undetected_chromedriver as uc
@@ -42,6 +78,7 @@ except Exception:
 from .extractors import UsageExtractor
 from .models import UsageComponent
 from .session_manager import save_session, load_session
+from .retry_handler import RetryPolicy, with_retry
 
 PERCENT_RE = re.compile(r"(\d{1,3})\s*%")
 USAGE_URL = "https://claude.ai/settings/usage"
@@ -324,3 +361,83 @@ def extract_from_text(page_source: str) -> List[Dict[str, Any]]:
             pct = None
         results.append({"raw_text": txt, "percent": pct})
     return results
+if __name__ == "__main__":
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser(description="Claude usage scraper CLI")
+    parser.add_argument("--poll_once", action="store_true", help="Run single poll and exit (used by Rust backend)")
+    parser.add_argument("--check-session", action="store_true", help="Check if a saved session exists and is valid")
+    parser.add_argument("--login", action="store_true", help="Open headed browser for manual login and save session")
+    parser.add_argument("--timeout", type=int, default=30, help="Timeout for navigation/challenge resolution (seconds)")
+    args = parser.parse_args()
+
+    # Helper to print JSON to stdout
+    def out_json(obj):
+        print(json.dumps(obj, ensure_ascii=False))
+        sys.stdout.flush()
+
+    try:
+        if args.check_session:
+            sess = load_session()
+            ok = sess is not None and not is_session_expired(sess)
+            out_json({"session_valid": ok})
+            sys.exit(0 if ok else 2)
+
+        if args.login:
+            try:
+                result = ClaudeUsageScraper.manual_login(profile_path=DEFAULT_PROFILE_DIR)
+                out_json({"login": "success", "session": result})
+                sys.exit(0)
+            except Exception as e:
+                logger.exception("manual_login failed")
+                emit_error("manual_login_failed", "manual login failed", details=str(e))
+                sys.exit(1)
+
+        if args.poll_once:
+            # Single-run poll: require a saved session
+            sess = load_session()
+            if not sess:
+                emit_error("session_required", "No valid session", details="no saved session found")
+                sys.exit(1)
+            driver = None
+            try:
+                driver = ClaudeUsageScraper.create_driver(headless=False, profile_path=DEFAULT_PROFILE_DIR)
+
+                # Define operation combining navigation and extraction so we can retry it.
+                policy = RetryPolicy()  # defaults: 1s initial, 2x multiplier, 4 attempts, 60s max
+                def operation():
+                    ok = ClaudeUsageScraper.navigate_to_usage(driver, timeout=args.timeout, poll=2.0)
+                    if not ok:
+                        # navigate_to_usage attaches diagnostics to driver; raise to trigger retry
+                        raise RuntimeError(\"navigation_failed\")
+                    return ClaudeUsageScraper.extract_live_data(driver)
+
+                try:
+                    data = with_retry(operation, policy, on_retry=lambda attempt, delay, exc: logger.warning(f\"poll_once retry {attempt} after {delay}s: {exc}\"))  # type: ignore
+                    out_json(data)
+                    sys.exit(0)
+                except Exception as e:
+                    logger.exception(\"poll_once failed after retries\")
+                    diag = getattr(driver, \"scraper_diagnostics\", None)
+                    emit_error(\"navigation_failed\", \"navigation or extraction failed after retries\", details=str(e), diagnostics=diag)
+                    sys.exit(1)
+            except Exception as e:
+                logger.exception("poll_once failed")
+                diag = getattr(driver, "scraper_diagnostics", None)
+                emit_error("fatal", "poll_once failed", details=str(e), diagnostics=diag)
+                sys.exit(1)
+            finally:
+                try:
+                    if driver is not None:
+                        driver.quit()
+                except Exception:
+                    pass
+
+        # If no recognized flag, show help
+        parser.print_help()
+        sys.exit(0)
+    except Exception as e:
+        logger.exception("cli main failure")
+        print(json.dumps({"error": str(e)}), file=sys.stderr)
+        sys.exit(1)
