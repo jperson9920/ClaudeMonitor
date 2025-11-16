@@ -17,6 +17,17 @@ import re
 import os
 import time
 from pathlib import Path
+import logging
+
+# Configure module-level logger for scraper diagnostics
+logger = logging.getLogger("scraper")
+if not logger.handlers:
+    logger.setLevel(logging.DEBUG)
+    log_path = Path("scraper/scraper.log")
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    _fh = logging.FileHandler(log_path, encoding="utf-8")
+    _fh.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+    logger.addHandler(_fh)
 
 # Selenium / undetected-chromedriver imports
 try:
@@ -99,24 +110,87 @@ class ClaudeUsageScraper:
             return False
 
     @classmethod
-    def navigate_to_usage(cls, driver, timeout: int = 60, poll: float = 2.0) -> bool:
+    def navigate_to_usage(
+        cls,
+        driver,
+        timeout: int = 60,
+        poll: float = 2.0,
+        initial_delay: float = 1.0,
+        multiplier: float = 2.0,
+        max_attempts: int = 4,
+    ) -> bool:
         """
-        Navigate to USAGE_URL and wait for Cloudflare challenge to resolve.
-        Returns True if navigation succeeded and page appears usable, False otherwise.
-        """
-        start = time.time()
-        try:
-            driver.get(USAGE_URL)
-        except WebDriverException:
-            # network/navigation error
-            return False
+        Navigate to USAGE_URL with Cloudflare-challenge awareness and an exponential-backoff
+        retry strategy for navigation attempts.
 
-        # Wait loop for challenge resolution
-        while time.time() - start < timeout:
-            if not cls.is_challenge_page(driver):
-                return True
-            time.sleep(poll)
-        return not cls.is_challenge_page(driver)
+        Returns True if navigation succeeded and page appears usable, False otherwise.
+
+        Side-effect: attaches a diagnostics dict to the driver object as
+        driver.scraper_diagnostics (when possible) so callers can inspect
+        what happened (e.g., {'cloudflare_detected': True, 'retries': 2})
+        """
+        diagnostics: Dict[str, Any] = {"cloudflare_detected": False, "retries": 0, "error": None}
+        # Helper to attach diagnostics when driver is available
+        def _attach(diag: Dict[str, Any]) -> None:
+            try:
+                setattr(driver, "scraper_diagnostics", diag)
+            except Exception:
+                # best-effort only
+                pass
+
+        attempt = 0
+        delay = initial_delay
+
+        while attempt < max_attempts:
+            attempt += 1
+            diagnostics["attempt"] = attempt
+            logger.debug(f"navigate_to_usage: attempt {attempt} navigating to {USAGE_URL}")
+            try:
+                driver.get(USAGE_URL)
+            except WebDriverException as ex:
+                diagnostics["error"] = "navigation_exception"
+                diagnostics["exception"] = str(ex)
+                logger.warning(f"navigate_to_usage: navigation exception on attempt {attempt}: {ex}")
+                _attach(diagnostics)
+                # fall through to retry after backoff
+            start = time.time()
+            # Wait for challenge resolution / successful page appearance
+            while time.time() - start < timeout:
+                try:
+                    if not cls.is_challenge_page(driver):
+                        diagnostics["cloudflare_detected"] = False
+                        diagnostics["retries"] = attempt - 1
+                        _attach(diagnostics)
+                        logger.debug("navigate_to_usage: page usable, exiting wait loop")
+                        return True
+                    else:
+                        # mark that we saw a challenge
+                        diagnostics["cloudflare_detected"] = True
+                        _attach(diagnostics)
+                        logger.info("navigate_to_usage: Cloudflare/challenge detected; polling for resolution")
+                except Exception as ex:
+                    logger.exception(f"navigate_to_usage: error during challenge detection: {ex}")
+                time.sleep(poll)
+
+            # If we reach here, the wait timed out without resolving the challenge
+            diagnostics["retries"] = attempt
+            logger.warning(f"navigate_to_usage: attempt {attempt} timed out waiting for challenge resolution")
+            _attach(diagnostics)
+
+            if attempt < max_attempts:
+                logger.debug(f"navigate_to_usage: backing off for {delay}s before retry #{attempt+1}")
+                time.sleep(delay)
+                delay *= multiplier
+            else:
+                diagnostics["error"] = "navigation_failed"
+                logger.error("navigate_to_usage: max attempts reached; navigation failed")
+                _attach(diagnostics)
+                return False
+
+        # Defensive fallback
+        diagnostics["error"] = "navigation_failed"
+        _attach(diagnostics)
+        return False
 
     @classmethod
     def manual_login(cls, driver=None, profile_path: str = DEFAULT_PROFILE_DIR) -> dict:
