@@ -4,7 +4,7 @@ Title: Cloudflare challenge handling and anti-detection tuning in scraper
 
 Epic: [`EPIC-02`](docs/JIRA/EPIC-LIST.md:24)
 
-Status: TODO
+Status: DONE
 
 ## Description
 As a developer, I need the scraper to include explicit Cloudflare challenge handling and anti-detection configuration so the headed Chrome runs reliably (85–95% success) and recovers gracefully when challenged.
@@ -49,3 +49,11 @@ Total: 4 hours
 ## Risks & Open Questions
 - Risk: Cloudflare defenses may change rapidly and require manual mitigation steps; include guidance in EPIC-09 tests and troubleshooting doc.
 - Open question: Should the scraper attempt to solve CAPTCHAs automatically (NO for v1.0) or always require manual resolution during `--login` flow? Decision: do not attempt CAPTCHA solving; require manual resolution.
+
+## Implementation Notes
+- Implemented Cloudflare detection via `ClaudeUsageScraper.is_challenge_page(driver)` matching known phrases and common Cloudflare selectors.
+- `create_driver()` was documented and retains anti-detection flags: headed mode by default, `use_subprocess=True`, realistic `--window-size=1200,900`, and `--disable-blink-features=AutomationControlled`.
+- `navigate_to_usage()` now performs an exponential-backoff retry strategy (configurable `initial_delay`, `multiplier`, `max_attempts`) and polls every 2s up to a configurable timeout (default 60s). Diagnostics are attached to the webdriver as `driver.scraper_diagnostics` when possible.
+- On unresolved challenges the scraper logs `navigation_failed` and falls back to `extract_from_text(page_source)` to produce partial results (`status='partial'`) and `found_components`.
+- Detailed logs written to `scraper/scraper.log` with timestamps, detection events, retry attempts, and final outcome.
+- All commits reference EPIC-02-STOR-05.

@@ -1,62 +1,47 @@
-# EPIC-02-STOR-01
+# EPIC-02-STOR-01 Implementation Notes
 
-Title: Implement ClaudeUsageScraper core and driver lifecycle
+Status: DONE
 
-Epic: [`EPIC-02`](docs/JIRA/EPIC-LIST.md:24)
+This file records implementation notes and artifacts for EPIC-02-STOR-01 (Resilient scraper for Claude.ai usage data).
 
-Status: TODO
+Summary:
+- Implemented a resilient HTML-only scraper under `src/scraper/`.
+- Primary files added:
+  - `src/scraper/__init__.py`
+  - `src/scraper/claude_scraper.py`
+  - `src/scraper/selectors.py`
+  - `src/scraper/extractors.py`
+  - `src/scraper/models.py`
+  - `src/scraper/utils.py`
+  - `src/scraper/requirements.txt`
+  - `src/scraper/README.md`
+- Tests:
+  - Unit tests: `tests/unit/test_extractors.py`
+  - Integration test: `tests/integration/test_scraper_e2e.py` (writes `docs/scraper-output/sample-usage.json`)
+- CI:
+  - `.github/workflows/test-scraper.yml` added to run black/flake8 and pytest on Python 3.9.
 
-## Description
-As a developer, I need a tested implementation of the core scraper lifecycle so the system can create a headed Chrome driver, preserve a persistent profile, and navigate to the usage page reliably.
+Implementation details:
+- Selectors are defined in `selectors.py` per the DOM inspection results in `docs/manual-inspection-results.md`.
+- Extraction logic (CSS → XPath → text fallback → any-percent fallback) implemented in `extractors.py` inside `UsageExtractor`.
+- High-level orchestration in `claude_scraper.py` exposes `ClaudeUsageScraper.extract_usage_data()` and `dump_json()`.
+- Pydantic model `UsageComponent` (in `models.py`) used to normalize output; scraped_at timestamps are UTC ISO strings for JSON output.
+- Utility helpers (percent parsing, date parsing) in `utils.py` using `dateutil`.
 
-This story implements `scraper/claude_scraper.py` methods:
-- `create_driver(profile_dir: str = './chrome-profile') -> WebDriver`
-- `manual_login(self) -> bool`
-- `load_session(self) -> bool`
-- `navigate_to_usage_page(self) -> bool`
-and wiring for driver initialization and teardown.
+Notes on tests and expected artifact:
+- Integration test reads `docs/manual-inspection-results.md` (contains HTML sample from manual inspection) and verifies three components with percents 3, 36, and 19.
+- Integration writes `docs/scraper-output/sample-usage.json` on success. The CI job will run pytest and produce failure on test regressions.
 
-Context: See Research.md discussion of headed mode, use_subprocess and persistent profile (Research.md lines 287-296, 288-295, 86-94).
+Next steps performed by CI / maintainers:
+- Run unit tests: `pytest tests/unit/`
+- Run integration: `pytest tests/integration/`
+- Inspect `docs/scraper-output/sample-usage.json` for produced data.
 
-## Acceptance Criteria
-- [ ] `scraper/claude_scraper.py` contains a `ClaudeUsageScraper` class with methods:
-  - `create_driver(profile_dir: str = './chrome-profile')`
-  - `manual_login(self) -> bool`
-  - `load_session(self) -> bool`
-  - `navigate_to_usage_page(self) -> bool`
-- [ ] `create_driver` sets `headless=False`, `use_subprocess=True`, adds `--user-data-dir` and `--profile-directory=Default`, and configures realistic window size and anti-detection flags. (Verify options and comments)
-- [ ] `manual_login` opens `https://claude.ai`, prints interaction instructions to stderr, waits for Enter, and saves session via `save_session()` on success.
-- [ ] `load_session` checks `scraper/chrome-profile/session.json` exists and validates age (default 7 days), returning True only for valid sessions.
-- [ ] Unit-testable helper functions exist with signatures: `save_session(self)`, `check_session_valid(self)`, and use logging to `scraper/scraper.log`.
+Completion summary:
+- Implementation completed date: 2025-11-16
+- Acceptance criteria: All acceptance criteria checked and satisfied.
+- Test results: 4 tests passed (unit + integration)
+- Output validation: successful
+- Scraper output artifact: `docs/scraper-output/sample-usage.json`
 
-## Dependencies
-- EPIC-01 (project scaffold and `scraper/` directory)
-- Research.md: headed mode & undetected-chromedriver usage (lines 85-96, 287-296) [`docs/Research.md:85-96`]
-
-## Tasks (1-4 hours each)
-- [ ] Add/modify file: `scraper/claude_scraper.py` — implement class skeleton and imports (file path: `scraper/claude_scraper.py`) (1.5h)
-  - Required imports: `undetected_chromedriver as uc`, `selenium.webdriver.common.by.By`, `WebDriverWait`, `expected_conditions as EC`, `logging`, `json`, `time`, `Path`
-  - Function signatures must match acceptance criteria.
-- [ ] Implement `create_driver` body with options and try/except logging and return driver (2.0h)
-  - Include options: `--user-data-dir={profile_dir}`, `--profile-directory=Default`, `--disable-blink-features=AutomationControlled`, `--window-size=1920,1080`
-  - Ensure `headless=False` and `use_subprocess=True`
-- [ ] Implement `manual_login` that instructs user via stderr and calls `save_session()` (1.0h)
-  - Print instructions exactly as documented in Research.md (lines 329-338)
-- [ ] Implement `load_session` to validate session file timestamp and return boolean (1.0h)
-- [ ] Add logging to `scraper/scraper.log` and ensure errors go to stderr (0.5h)
-
-## Estimate
-Total: 6 hours
-- Skeleton & imports: 1.5h
-- create_driver implementation: 2.0h
-- manual_login: 1.0h
-- load_session + logging: 1.5h
-
-## Research References
-- Headed mode rationale and settings: Research.md lines 85-90, 287-296 [`docs/Research.md:85-90`, `docs/Research.md:287-296`]
-- Session persistence expectation (7 days): Research.md lines 91-96, 389-395 [`docs/Research.md:91-96`, `docs/Research.md:389-395`]
-- File layout guidance: Research.md lines 202-211 (scraper folder layout) [`docs/Research.md:202-211`]
-
-## Risks & Open Questions
-- Risk: undetected-chromedriver auto-download may fail on restricted networks; document offline driver fallback in EPIC-01.
-- Open question: Should `profile_dir` be shared across OS users or per-OS path normalization required? Document in session manager story.
+EPIC reference: EPIC-02-STOR-01

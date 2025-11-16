@@ -16,10 +16,14 @@ Goal: Establish reproducible development environment and project skeleton.
 Acceptance Criteria:
 - Repo contains initial Tauri project scaffold (src-tauri, src) and scraper/ directory.
 - Development toolchain documented (Node 18+, Rust 1.70+, Python 3.9+).
+- Devcontainer configuration included (.devcontainer/) with Node 18, Rust 1.70, Python 3.9 and usage instructions in `docs/README-SETUP.md`.
 - README includes setup steps for creating Python venv and installing dependencies.
 - Basic CI/local checklist added to docs/JIRA/EPIC-LIST.md (or README).
 Effort: Small (1–3 days)
 Dependencies: None
+
+Stories:
+- [`EPIC-01-STOR-01`](docs/JIRA/EPIC-01-STOR-01.md:1) — Initialize repository, toolchain docs and Tauri scaffold — Status: DONE — Commit: df327e9 — Branch: epic-01-stor-01/setup
 
 ## EPIC-02: Python Scraper Core Engine
 Goal: Implement ClaudeUsageScraper to reliably extract the three usage percentages and reset times.

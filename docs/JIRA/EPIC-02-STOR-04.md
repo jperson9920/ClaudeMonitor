@@ -1,46 +1,71 @@
-# EPIC-02-STOR-04
+# EPIC-02-STOR-04 — Persistent storage and schema migration
 
-Title: Add parser smoke-tests and stored HTML fixtures
+## Summary
+- Implemented a lightweight SQLite-backed storage layer and simple migration runner.
+- Scheduler now persists scrapes into DB via `storage.insert_scrape_result(...)`.
+- Includes basic retention configuration and a programmatic prune API.
 
-Epic: [`EPIC-02`](docs/JIRA/EPIC-LIST.md:24)
+## Files added/changed
+- `src/scraper/storage.py`
+- `src/scraper/migrations/0001_initial_schema.sql`
+- `src/scraper/migrations/0002_retention_meta.sql`
+- `src/scraper/scheduler.py` (modified to persist scrapes)
+- `tests/integration/test_storage.py`
 
-Status: TODO
+## Schema (design)
+- `scrapes`: id, scraped_at (ISO), data_json (JSON), status, created_at
+- `components`: id, scrape_id (FK), component_id, label, percent, raw_text, scraped_at
+- `schema_migrations`: version, name, applied_at
+- `retention_config`: single-row config (id=1) with `max_rows`, `retention_days`, `updated_at`
 
-## Description
-As a developer, I need regression tests that validate the parser against saved HTML snapshots of the usage page so extraction changes don't break silently. This enables verifying the multi-strategy extraction (JS -> DOM -> plain-text) and Cloudflare/fallback behavior described in Research.md.
+## Migrations
+- Migration files are simple ordered SQL scripts under `src/scraper/migrations/`.
+- `Storage.apply_migrations()` applies any migration not yet recorded in `schema_migrations`.
+- Included migrations:
+  - `0001_initial_schema.sql` — creates `scrapes` and `components`
+  - `0002_retention_meta.sql` — creates `retention_config` table
 
-## Acceptance Criteria
-- [ ] `scraper/testdata/` contains at least 3 HTML snapshots (examples: normal usage page, alternate layout, Cloudflare challenge page).
-- [ ] `scraper/tests/test_parser.py` imports parser helpers from `scraper/claude_scraper.py` and asserts expected values for each fixture (percentages, reset text presence, found_components count).
-- [ ] Test runner `scraper/run_parser_tests.sh` / `scraper/run_parser_tests.ps1` exists and runs tests in venv, printing PASS/FAIL and exit code.
-- [ ] CI-friendly output: tests use pytest and exit non-zero on failures.
+## Usage
+- Default DB path: `./scraper/data/usage.db`
+- Override data directory with environment variable: `CLAUDE_SCRAPER_DATA_DIR` (directory containing `usage.db`)
+- Programmatic API (in `src/scraper/storage.py`):
+  - `Storage(db_path=None)`
+  - `apply_migrations()`
+  - `insert_scrape_result(result: dict, scraped_at: Optional[str]) -> int`
+  - `get_scrape(id) -> dict`
+  - `list_scrapes(limit) -> List[dict]`
+  - `prune(retention_days=None, max_rows=None) -> int`
+  - `close()`
 
-## Dependencies
-- EPIC-02-STOR-02 (parsing helpers available)
-- EPIC-01 (test venv & requirements)
+## Scheduler integration
+- `src/scraper/scheduler.py` now imports `Storage` and calls `Storage.insert_scrape_result(...)` on successful scrapes.
+- If DB writes fail, the scheduler falls back to writing the JSON payload to the `DATA_DIR` as before.
 
-## Tasks (1-3 hours each)
-- [ ] Add directory `scraper/testdata/` and include at least 3 saved HTML files:
-  - `usage_normal.html` (representative successful DOM)
-  - `usage_alt.html` (alternate DOM layout)
-  - `cloudflare_challenge.html` (challenge page snapshot)
-  - Guidance: Save from browser "Save page as" and sanitize PII before check-in. (0.75h)
-- [ ] Create `scraper/tests/test_parser.py`:
-  - Test functions:
-    - `test_parse_percentage()`: unit tests for `parse_percentage()` with multiple inputs
-    - `test_parse_reset_time()` with various human-readable strings
-    - `test_extract_usage_from_fixture()` loads fixture, mocks `driver.execute_script` or uses a minimal HTML parser to emulate DOM and asserts `found_components == 3` or expected partial state. (1.0h)
-  - Use pytest and include instructions for running in README. (1.0h)
-- [ ] Add `scraper/run_parser_tests.sh` and PowerShell equivalent to activate venv and run `pytest -q scraper/tests` (0.25h)
-- [ ] Document test approach in `scraper/TESTS.md` including how to update fixtures and expected outputs (0.5h)
+## Migration instructions
+- No external tooling required. Instantiating `Storage()` runs `apply_migrations()` automatically:
+  ```py
+  from src.scraper.storage import Storage
+  s = Storage()
+  ```
+- Migrations are idempotent; they will only be applied once and are recorded in `schema_migrations`.
 
-## Estimate
-Total: 3.5 hours
+## Tests
+- `tests/integration/test_storage.py` validates:
+  - DB creation and that migrations were recorded
+  - insert / get / list behavior
+  - prune behavior (max_rows pruning)
+- Run tests:
+  - pytest tests/integration/test_storage.py
 
-## Research References
-- Research.md: DOM extraction strategy and JS helper example (`docs/Research.md:463-499`)
-- EPIC-LIST.md: DOM scraping clarification and requirement for returning partials (`docs/JIRA/EPIC-LIST.md:127-135`)
+## Acceptance criteria status
+- [x] Design SQLite schema for usage data (components table, raw_json table, retention metadata)
+- [x] Implement persistence layer (CRUD + insert_scrape_result(result_json, scraped_at))
+- [x] Add migration support (create DB and apply migrations; included at least one migration file)
+- [x] Implement data retention policy config and an API to prune old records
+- [x] Scheduler integration: scheduler saves each successful scrape via `storage.insert_scrape_result(...)`
+- [x] Provide minimal docs/usage in this file with applied changes and migration instructions
+- [x] Add tests that validate storage writes and migration path (create DB, run migrations, insert sample record, read back)
 
-## Risks & Open Questions
-- Risk: Fixtures may contain dynamic tokens or timestamps that make assertions brittle; tests should assert normalized numeric values and presence of reset text, not exact timestamps.
-- Open question: Should fixtures be included in the repository or stored externally? Recommend including sanitized fixtures for reproducible CI.
+## Notes
+- Concurrency: the storage connection uses `check_same_thread=False` and a `threading.Lock` to serialize access across threads. For higher throughput or multiple processes, consider a server DB (Postgres) or connection pooling.
+- Future work: replace the simple SQL migration runner with Alembic if migration complexity grows.

@@ -7,7 +7,7 @@ Notes:
 - Filenames are clickable links to the story files.
 
 ## EPIC-01: Project Setup & Environment
-- [`EPIC-01-STOR-01`](docs/JIRA/EPIC-01-STOR-01.md:1) — Initialize repository, toolchain docs and Tauri scaffold — Status: TODO — Estimate: 4h — Depends: none
+- [`EPIC-01-STOR-01`](docs/JIRA/EPIC-01-STOR-01.md:1) — Initialize repository, toolchain docs and Tauri scaffold — Status: DONE — Estimate: 4h — Depends: none
 - [`EPIC-01-STOR-02`](docs/JIRA/EPIC-01-STOR-02.md:1) — Pin toolchain (.nvmrc, rust-toolchain) and add devcontainer — Status: TODO — Estimate: 3h — Depends: EPIC-01-STOR-01
 - [`EPIC-01-STOR-03`](docs/JIRA/EPIC-01-STOR-03.md:1) — Add scraper venv template, requirements, and sample run script — Status: TODO — Estimate: 2h — Depends: EPIC-01-STOR-01
 
