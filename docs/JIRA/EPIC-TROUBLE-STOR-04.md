@@ -65,6 +65,19 @@ Artifacts/evidence required to validate hypotheses
 - Full stdout JSON for the poll run (above excerpt)
 - Any exception traces or warnings in tauri dev server logs indicating IPC emit failures
 
+Artifacts
+- artifacts/tests/EPIC-TROUBLE-STOR-04/scraper-log.txt — excerpt (first ~5000 chars) copied from `scraper/scraper.log`; contains error traces showing Chrome/undetected-chromedriver failures and SessionNotCreatedException.
+- artifacts/tests/EPIC-TROUBLE-STOR-04/tauri-dev-log.txt — copy of `docs/tauri-dev.log` capturing the Tauri dev server stdout/stderr during the run.
+- artifacts/tests/EPIC-TROUBLE-STOR-04/poll_once-output.json — captured stdout JSON from `python -m src.scraper.claude_scraper --poll_once`. Recorded poll timestamp: 2025-11-17T20:14:56.516Z.
+- artifacts/tests/EPIC-TROUBLE-STOR-04/chrome-profile-listing.txt — recursive listing of `scraper/chrome-profile/` (dir /s output truncated for brevity).
+- artifacts/tests/EPIC-TROUBLE-STOR-04/terminal-timestamp.txt — run timestamp file:
+  - UTC: 2025-11-17T20:04:22.666176Z
+  - Local (America/Los_Angeles): 2025-11-17T20:04:22
+
+Notes
+- Sensitive session files (cookies/session.json) are intentionally NOT attached. If sanitized session artifacts are required, create a sanitized copy and record its path.
+- If any artifact exceeded size limits it was truncated to the first 10000 bytes and a truncation note was added to the artifact file.
+
 Suggested next technical tasks (see EPIC-TROUBLE-STOR-05 for remediation task list)
 - Add diagnostic logs around session-check decision points (why browser was closed)
 - Add defensive clamping and fallback parsing in percentage extraction

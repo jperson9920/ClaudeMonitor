@@ -1,0 +1,18 @@
+scraper/chrome-profile listing (truncated)
+Note: This is a truncated listing of files/dirs under scraper/chrome-profile. Full output available via: dir /s scraper\chrome-profile
+
+AmountExtractionHeuristicRegexes/
+AutofillStates/
+CertificateRevocation/
+CommerceHeuristics/
+component_crx_cache/
+CookieReadinessList/
+Crashpad/
+Default/
+tmp-repro-20251117T054601Z-1/
+tmp-repro-20251117T054610Z-2/
+tmp-repro-20251117T054619Z-3/
+tmp-repro-1763364673/
+tmp-smoke-1763355109/
+tmp-smoke-1763357120/
+... (truncated)

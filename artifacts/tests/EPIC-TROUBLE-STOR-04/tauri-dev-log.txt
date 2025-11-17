@@ -1,0 +1,59 @@
+> claude-usage-monitor@0.1.0 tauri
+> tauri dev
+
+     Running BeforeDevCommand (`npm run dev`)
+
+> claude-usage-monitor@0.1.0 dev
+> vite
+
+11:50:15 AM  [vite]  (client) Re-optimizing dependencies because vite config has changed
+
+  VITE v6.4.1   ready in 318 ms
+
+  ➜  Local:   http://localhost:1420/
+     Running DevCommand (`cargo  run --no-default-features --color always --`)
+        Info Watching d:\VSProj\ClaudeMonitor\src-tauri for changes...
+warning: unused import: `Manager`
+--> src\lib.rs:8:13
+| 
+8 | use tauri::{Manager, Emitter};
+|             ^^^^^^^
+ note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `details`, `timestamp`, and `diagnostics` are never read
+ --> src\scraper.rs:51:5
+|
+48 | struct ScraperStderrError {
+|     
+51 |     details: Option<String>,
+|     ^^^^^^^
+52 |     timestamp: Option<String>,
+|     ^^^^^^^^^
+53 |     diagnostics: Option<serde_json::Value>,
+|     ^^^^^^^^^^^
+
+ note: `ScraperStderrError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+warning: function `create_system_tray` is never used
+--> src\tray.rs:11:8
+11 | pub fn create_system_tray() -> Option<()> {
+   ^^^^^^^^^^^^^^^^^^^
+
+warning: function `handle_tray_event` is never used
+--> src\tray.rs:19:8
+19 | pub fn handle_tray_event(_app: &AppHandle, _event: &str) {
+   ^^^^^^^^^^^^^^^^^^
+
+`tauri-app` (lib) generated 4 warnings
+   Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.24s
+    Running `target\debug\tauri-app.exe`
+12:31:58 PM  [vite]  (client)  page reload scraper/chrome-profile/WasmTtsEngine/20251114.1/offscreen.html
+12:34:42 PM  [vite]  (client)  page reload scraper/scraper-env/Lib/site-packages/setuptools/tests/indexes/test_links_priority/external.html
+12:34:42 PM  [vite]  (client)  page reload scraper/scraper-env/Lib/site-packages/setuptools/tests/indexes/test_links_priority/simple/foobar/index.html
+12:54:30 PM  [vite]  (client)  page reload scraper/chrome-profile/Default/Extensions/nmmhkkegccagdldgiimedpiccmgmieda/1.0.0.6_0/html/craw_window.html
+12:54:30 PM  [vite]  (client)  page reload scraper/chrome-profile/Default/Extensions/Temp/scoped_dir25736_156114517/CRX_INSTALL/offscreendocument.html
+12:54:31 PM  [vite]  (client)  page reload scraper/chrome-profile/Default/Extensions/ghbmnnjooekpmoecnnnilnnbdlolhkhi/1.98.1_0/offscreendocument.html
+12:54:31 PM  [vite]  (client)  page reload scraper/chrome-profile/Default/Extensions/Temp/scoped_dir25736_156114517/CRX_INSTALL/offscreendocument.html
+12:57:21 PM  [vite]  (client)  page reload scraper/chrome-profile-fresh/Default/Extensions/nmmhkkegccagdldgiimedpiccmgmieda/1.0.0.6_0/html/craw_window.html
+12:57:21 PM  [vite]  (client)  page reload scraper/chrome-profile-fresh/Default/Extensions/Temp/scoped_dir9736_1844942079/CRX_INSTALL/offscreendocument.html
+12:57:22 PM  [vite]  (client)  page reload scraper/chrome-profile-fresh/Default/Extensions/ghbmnnjooekpmoecnnnilnnbdlolhkhi/1.98.1_0/offscreendocument.html
+12:57:22 PM  [vite]  (client)  page reload scraper/chrome-profile-fresh/Default/Extensions/Temp/scoped_dir9736_1844942079/CRX_INSTALL/offscreendocument.html

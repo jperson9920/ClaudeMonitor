@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-11-17T20:14:56.516Z",
+  "status": "success",
+  "found_components": 3,
+  "usage": {
+    "total_percent": 568.0,
+    "today_percent": 568.0,
+    "hour_percent": 568.0
+  },
+  "notes": "extraction-from-style_width_progress"
+}
