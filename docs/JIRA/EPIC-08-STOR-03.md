@@ -98,3 +98,6 @@ Changelog (EPIC-08-STOR-03):
   - Full moved listing and sizes saved at artifacts/trash/20251117-182714-move/move_plan.json
 - Commit: a0137f3
 - Notes: scraper/logs/nssm_stderr.log was locked and not moved (left in place and flagged)
+---
+- Date: 2025-11-18T03:00:49Z
+- Action: Reverted commit a0137f3 (revert de397c9527cc33a88578d0233fdfb6ecdb4d58d), created backup branch backup/EPIC-08-STOR-03-a0137f3. Reapplied moves with git mv — commit d73fe3ab7388ec96edc021279d35374390e699e.
