@@ -1,0 +1,1252 @@
+﻿[
+    {
+        "Path":  "artifacts/poll_debug.log",
+        "IsDir":  false,
+        "SizeBytes":  2336
+    },
+    {
+        "Path":  "artifacts/poll_debug_login.log",
+        "IsDir":  false,
+        "SizeBytes":  3698
+    },
+    {
+        "Path":  "artifacts/scraper_manual_login.log",
+        "IsDir":  false,
+        "SizeBytes":  512
+    },
+    {
+        "Path":  "artifacts/verification-run/run_poll.log",
+        "IsDir":  false,
+        "SizeBytes":  710
+    },
+    {
+        "Path":  "artifacts/verification-run-2/structured-events.log",
+        "IsDir":  false,
+        "SizeBytes":  1652
+    },
+    {
+        "Path":  "artifacts/verification-stor-03/poll_debug.log",
+        "IsDir":  false,
+        "SizeBytes":  3256
+    },
+    {
+        "Path":  "artifacts/verification-stor-03/poll_debug_login.log",
+        "IsDir":  false,
+        "SizeBytes":  8486
+    },
+    {
+        "Path":  "docs/tauri-dev.log",
+        "IsDir":  false,
+        "SizeBytes":  5943
+    },
+    {
+        "Path":  "docs/tauri-dev-tail.log",
+        "IsDir":  false,
+        "SizeBytes":  4275
+    },
+    {
+        "Path":  "node_modules",
+        "IsDir":  true,
+        "SizeBytes":  81257662
+    },
+    {
+        "Path":  "node_modules/@jridgewell/gen-mapping/dist",
+        "IsDir":  true,
+        "SizeBytes":  37839
+    },
+    {
+        "Path":  "node_modules/@jridgewell/remapping/dist",
+        "IsDir":  true,
+        "SizeBytes":  20116
+    },
+    {
+        "Path":  "node_modules/@jridgewell/resolve-uri/dist",
+        "IsDir":  true,
+        "SizeBytes":  47185
+    },
+    {
+        "Path":  "node_modules/@jridgewell/sourcemap-codec/dist",
+        "IsDir":  true,
+        "SizeBytes":  46771
+    },
+    {
+        "Path":  "node_modules/@jridgewell/trace-mapping/dist",
+        "IsDir":  true,
+        "SizeBytes":  56783
+    },
+    {
+        "Path":  "node_modules/@rolldown/pluginutils/dist",
+        "IsDir":  true,
+        "SizeBytes":  17418
+    },
+    {
+        "Path":  "node_modules/@vitejs/plugin-react/dist",
+        "IsDir":  true,
+        "SizeBytes":  37427
+    },
+    {
+        "Path":  "node_modules/baseline-browser-mapping/dist",
+        "IsDir":  true,
+        "SizeBytes":  235020
+    },
+    {
+        "Path":  "node_modules/caniuse-lite/dist",
+        "IsDir":  true,
+        "SizeBytes":  4238
+    },
+    {
+        "Path":  "node_modules/escalade/dist",
+        "IsDir":  true,
+        "SizeBytes":  1051
+    },
+    {
+        "Path":  "node_modules/fdir/dist",
+        "IsDir":  true,
+        "SizeBytes":  45693
+    },
+    {
+        "Path":  "node_modules/json5/dist",
+        "IsDir":  true,
+        "SizeBytes":  166152
+    },
+    {
+        "Path":  "node_modules/rollup/dist",
+        "IsDir":  true,
+        "SizeBytes":  2705410
+    },
+    {
+        "Path":  "node_modules/tinyglobby/dist",
+        "IsDir":  true,
+        "SizeBytes":  36349
+    },
+    {
+        "Path":  "node_modules/vite/dist",
+        "IsDir":  true,
+        "SizeBytes":  2507169
+    },
+    {
+        "Path":  "poll_debug.log",
+        "IsDir":  false,
+        "SizeBytes":  1876
+    },
+    {
+        "Path":  "poll_debug_login.log",
+        "IsDir":  false,
+        "SizeBytes":  3678
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  266
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  266
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  798
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1157
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/IndexedDB/https_claude.ai_0.indexeddb.leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1794
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/IndexedDB/https_docs.sillytavern.app_0.indexeddb.leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  971
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/Local Storage/leveldb/000048.log",
+        "IsDir":  false,
+        "SizeBytes":  6602
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/Service Worker/Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  5015
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/Session Storage/000006.log",
+        "IsDir":  false,
+        "SizeBytes":  726
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  355386
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  2048
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  676
+    },
+    {
+        "Path":  "scraper/chrome-profile/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  15871
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1157
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/IndexedDB/https_claude.ai_0.indexeddb.leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1794
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  48984
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  2166
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  98980
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1164
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  172
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763360996/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1157
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/IndexedDB/https_claude.ai_0.indexeddb.leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1794
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3534
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  2896
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  97588
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1106
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  100
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362887/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362959/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362959/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362959/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362959/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  790
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362959/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  638
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362959/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  7144
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362959/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  706
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362959/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  40
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763362959/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  118
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763363786/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763363786/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763363786/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763363786/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  2560
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763363786/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  678
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763363786/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  7210
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763363786/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  706
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763363786/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  40
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763363786/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  118
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1157
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3268
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  771
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  99978
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1106
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  40
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364158/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364502/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364502/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364502/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364502/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364502/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  822
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364502/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  702
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364502/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  7144
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364502/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  706
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364502/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  40
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364502/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1846
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1156
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1023
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1011
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  99107
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1106
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  40
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763364673/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1157
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/IndexedDB/https_claude.ai_0.indexeddb.leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1018
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  881
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1178
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  21311
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1106
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  40
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763409849/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1156
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/IndexedDB/https_claude.ai_0.indexeddb.leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1794
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  24072
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  9230
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  97512
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1164
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  175
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763422319/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1157
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/IndexedDB/https_claude.ai_0.indexeddb.leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1794
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  31686
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  37171
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  100856
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1164
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  319
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763423008/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1157
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/IndexedDB/https_claude.ai_0.indexeddb.leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1794
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  11601
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3402
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  99165
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1106
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  175
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763429986/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1157
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/IndexedDB/https_claude.ai_0.indexeddb.leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1794
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  8032
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  4164
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  96707
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1106
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  244
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430140/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1157
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  7034
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1070
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  100046
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1106
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  112
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-repro-1763430214/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355109/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355109/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355109/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355109/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  7376
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355109/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  626
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355109/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  6803
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355109/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  648
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355109/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  40
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355109/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  118
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355843/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355843/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355843/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355843/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1126
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355843/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  626
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355843/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  6803
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355843/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  648
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355843/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  40
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763355843/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  118
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763357120/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763357120/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  38
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763357120/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  114
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763357120/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  126
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763357120/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  626
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763357120/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  6803
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763357120/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  648
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763357120/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  40
+    },
+    {
+        "Path":  "scraper/chrome-profile/tmp-smoke-1763357120/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  118
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh",
+        "IsDir":  true,
+        "SizeBytes":  82938438
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Extension Rules/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  133
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Extension Scripts/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  133
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Extension State/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  399
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/GCM Store/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1157
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/GCM Store/Encryption/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Local Extension Settings/ghbmnnjooekpmoecnnnilnnbdlolhkhi/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  49
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  19
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Service Worker/Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  2296
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  232
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/shared_proto_db/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  95795
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/shared_proto_db/metadata/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  1106
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Site Characteristics Database/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  40
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Storage/ext/nmmhkkegccagdldgiimedpiccmgmieda/def/Local Storage/leveldb/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  19
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Storage/ext/nmmhkkegccagdldgiimedpiccmgmieda/def/Session Storage/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  61
+    },
+    {
+        "Path":  "scraper/chrome-profile-fresh/Default/Sync Data/LevelDB/000003.log",
+        "IsDir":  false,
+        "SizeBytes":  3079
+    },
+    {
+        "Path":  "scraper/interactive-run.log",
+        "IsDir":  false,
+        "SizeBytes":  2218
+    },
+    {
+        "Path":  "scraper/interactive-run-final.log",
+        "IsDir":  false,
+        "SizeBytes":  3222
+    },
+    {
+        "Path":  "scraper/logs/foreground_stderr.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/logs/foreground_stdout.log",
+        "IsDir":  false,
+        "SizeBytes":  165
+    },
+    {
+        "Path":  "scraper/logs/nssm_stderr.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/logs/nssm_stdout.log",
+        "IsDir":  false,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "scraper/scraper.error.log",
+        "IsDir":  false,
+        "SizeBytes":  3254
+    },
+    {
+        "Path":  "scraper/scraper.log",
+        "IsDir":  false,
+        "SizeBytes":  256431
+    },
+    {
+        "Path":  "scraper/scraper.tail.log",
+        "IsDir":  false,
+        "SizeBytes":  15803
+    },
+    {
+        "Path":  "scraper/scraper-env/Lib/site-packages/pip/_internal/operations/build",
+        "IsDir":  true,
+        "SizeBytes":  28049
+    },
+    {
+        "Path":  "scraper/test_run.log",
+        "IsDir":  false,
+        "SizeBytes":  1810
+    },
+    {
+        "Path":  "scraper/test_run_first.log",
+        "IsDir":  false,
+        "SizeBytes":  3186
+    },
+    {
+        "Path":  "scraper/test_run_second.log",
+        "IsDir":  false,
+        "SizeBytes":  3186
+    },
+    {
+        "Path":  "scraper/uc-launch-diagnostic.log",
+        "IsDir":  false,
+        "SizeBytes":  6924
+    },
+    {
+        "Path":  "scraper/uc-launch-diagnostic2.log",
+        "IsDir":  false,
+        "SizeBytes":  7008
+    },
+    {
+        "Path":  "scraper/uc-launch-diagnostic3.log",
+        "IsDir":  false,
+        "SizeBytes":  7004
+    },
+    {
+        "Path":  "scraper-env/Lib/site-packages/pip/_internal/operations/build",
+        "IsDir":  true,
+        "SizeBytes":  28001
+    },
+    {
+        "Path":  "src-tauri/target/debug/build",
+        "IsDir":  true,
+        "SizeBytes":  527774830
+    },
+    {
+        "Path":  "src-tauri/target/tmp",
+        "IsDir":  true,
+        "SizeBytes":  0
+    },
+    {
+        "Path":  "target-src-tauri/release/build",
+        "IsDir":  true,
+        "SizeBytes":  273322984
+    },
+    {
+        "Path":  "tauri_dev.log",
+        "IsDir":  false,
+        "SizeBytes":  3491
+    }
+]
