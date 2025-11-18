@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use std::fs::{self, File};
 use std::io::Write;
-use tauri::api::path::app_config_dir;
+use dirs::config_dir;
 
 /// Application configuration persisted to disk.
 #[derive(Serialize, Deserialize, Clone)]
@@ -25,7 +25,7 @@ impl Default for AppConfig {
 ///    <app_config_dir>/ClaudeUsageMonitor/config.json
 /// - Fallback to current working directory `config.json` (development)
 pub fn config_path() -> PathBuf {
-    if let Some(mut dir) = app_config_dir() {
+    if let Some(mut dir) = config_dir() {
         dir.push("ClaudeUsageMonitor");
         dir.push("config.json");
         dir

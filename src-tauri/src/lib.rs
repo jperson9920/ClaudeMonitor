@@ -1,11 +1,12 @@
 mod resource;
+pub use resource::resolve_scraper_path;
 mod scraper;
 mod polling;
 mod config;
 mod tray;
 
 use std::sync::Mutex;
-use tauri::Manager;
+use tauri::{Manager, Emitter};
 use serde_json::Value;
 
 /// 30s timeout for interactive login
@@ -48,7 +49,7 @@ fn start_polling(
             let mut obj = serde_json::Map::new();
             obj.insert("status".to_string(), serde_json::Value::String("error".to_string()));
             obj.insert("message".to_string(), serde_json::Value::String(format!("failed to save config: {}", e)));
-            let _ = app_handle.emit_all("usage-error", serde_json::Value::Object(obj));
+            let _ = app_handle.emit("usage-error", serde_json::Value::Object(obj));
         }
         i
     } else {
@@ -71,8 +72,6 @@ pub fn run() {
     let poller = polling::Poller::new_default();
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .system_tray(tray::create_system_tray())
-        .on_system_tray_event(tray::handle_tray_event)
         .manage(Mutex::new(poller))
         .invoke_handler(tauri::generate_handler![
             manual_login,

@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import re
 
 from .selectors import SELECTORS
-from .utils import parse_percent
+from .utils import parse_percentage_safe
 
 """
 Rewritten extractor that avoids lxml to simplify local testing environments
@@ -193,7 +193,7 @@ class UsageExtractor:
                 selector_used = "any_percent_in_doc"
 
         if raw_text:
-            percent = parse_percent(raw_text)
+            percent = parse_percentage_safe(raw_text)
         else:
             raw_text = ""
             percent = None

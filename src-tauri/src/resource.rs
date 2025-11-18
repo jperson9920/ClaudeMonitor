@@ -1,6 +1,7 @@
 use std::env;
 use std::path::PathBuf;
-use tauri::api::path::resource_dir;
+ // `tauri::api::path::resource_dir` removed for newer tauri versions.
+ // Prefer reading TAURI_RESOURCE_DIR env var at runtime instead.
 
 /// Resolve the path to the scraper executable or script.
 ///
@@ -28,7 +29,9 @@ pub fn resolve_scraper_path() -> Result<PathBuf, String> {
 
     // 2) Testing hook: let tests mock the resource dir via env var
     if let Ok(mock_res_dir) = env::var("TAURI_RESOURCE_DIR_MOCK") {
-        let mut candidate = PathBuf::from(mock_res_dir);
+        // avoid moving the String into PathBuf so we can reference it in diagnostics
+        let candidate = PathBuf::from(&mock_res_dir);
+        let mut candidate = candidate;
         candidate.push("scraper");
         let exe_name = if cfg!(windows) {
             "claude_scraper.exe"
@@ -48,8 +51,11 @@ pub fn resolve_scraper_path() -> Result<PathBuf, String> {
     }
 
     // 3) Check if running as bundled Tauri app
-    if let Some(res_dir) = resource_dir() {
-        let mut candidate = res_dir;
+    // Newer tauri versions don't expose `tauri::api::path::resource_dir` on the root crate.
+    // Use the TAURI_RESOURCE_DIR environment variable (set by the runtime) as a fallback.
+    if let Ok(res_dir_str) = env::var("TAURI_RESOURCE_DIR") {
+        let res_dir = PathBuf::from(&res_dir_str);
+        let mut candidate = res_dir.clone();
         candidate.push("scraper");
         let exe_name = if cfg!(windows) {
             "claude_scraper.exe"

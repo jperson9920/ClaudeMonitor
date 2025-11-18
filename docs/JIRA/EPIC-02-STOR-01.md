@@ -1,99 +1,53 @@
-﻿# EPIC-02-STOR-01: Chrome Session Connection Fix
+# EPIC-02-STOR-01 - Manual Test Results
 
-## Status
-**RESOLVED** - Fix implemented and ready for testing
+Date: 2025-11-17T07:32:03Z  
+Tester: Automated Code-mode agent
 
-## Root Cause Analysis
+Summary:
+- Objective: Run scraper manual-login flow and verify session persistence; start dev server.
+- Result: PARTIAL SUCCESS
 
-### Symptom
-`
-selenium.common.exceptions.SessionNotCreatedException: Message: session not created: 
-cannot connect to chrome at 127.0.0.1:<random-port>
-`
+Actions performed:
+- Created Python venv and installed dependencies via `scraper\setup.ps1`.
+- Installed Node deps (`npm install`).
+- Ran scraper single poll (no login required) and saved sample output to `docs/scraper-sample-output.json`.
+- Forced manual login: `scraper\scraper-env\Scripts\python.exe -m src.scraper.claude_scraper --login` (browser opened; login completed).
+- Inspected `scraper/chrome-profile/` for session artifacts.
+- Attempted to start dev server: `npm run tauri dev` — FAILED to start (see logs).
 
-### Investigation Timeline
-1. **Evidence discovered**: Lockfile present in scraper/chrome-profile/ directory
-2. **Error location**: src/scraper/claude_scraper.py:176 during uc.Chrome() instantiation
-3. **Root cause**: Chrome locks user-data-dir on startup. When previous instances crash or don't exit cleanly, they leave lock files that prevent new Chrome instances from using the same profile.
+Acceptance criteria (status):
+- [x] scraper completes a single poll and outputs valid usage JSON
+- [x] forced manual login completed (browser login observed)
+- [x] session artifacts created under `scraper/chrome-profile/tmp-repro-1763364673/`
+- [ ] session persisted to `scraper/chrome-profile/session.json` — NOT FOUND (session saved to tmp-repro folder; consider moving/renaming)
+- [ ] No lingering chrome/chromedriver processes — NOT VERIFIED
+- [ ] Dev server (Tauri + Vite) runs and receives scraper data — FAILED (see `docs/tauri-dev.log`)
 
-### Technical Details
-- **Primary issue**: Zombie Chrome/chromedriver processes holding profile locks
-- **Secondary issue**: Stale lock files (lockfile, SingletonLock, SingletonSocket, SingletonCookie)
-- **Port behavior**: Each chromedriver attempt uses random remote-debugging-port, but connection fails because Chrome can't start with locked profile
+Artifacts:
+- Scraper sample output: `docs/scraper-sample-output.json`
+- Session profile directory (temporary): `scraper/chrome-profile/tmp-repro-1763364673/`
+- Dev logs: `docs/tauri-dev.log` and `docs/tauri-dev-tail.log`
 
-## Solution Implemented
+Observed errors / notes:
+- venv setup emitted a Windows copy warning for the venv launcher; not blocking for tests.
+- `npm run tauri dev` failed with an environment/command issue (`ynpm` not found) per logs.
+- Scraper saved session into a temp profile directory (`tmp-repro-...`) rather than writing `session.json` at top-level; behavior may be expected for this run but needs verification/standardization.
 
-### Changes Made
+Recommended next steps:
+1. Inspect `scraper/chrome-profile/tmp-repro-1763364673/` contents and either rename/move the profile or update scraper to persist `session.json` in `scraper/chrome-profile/`.
+2. Run `tasklist` / `Get-Process` to confirm no leftover chrome/chromedriver processes after scraper exit.
+3. Fix tauri dev startup:
+   - Try `npx tauri dev` or ensure tauri CLI is installed (`npm i -g @tauri-apps/cli` or `cargo install tauri-cli`).
+   - Inspect wrapper scripts that call `ynpm` and replace with `npm`/`npx` if needed.
+   - Re-run `npm run tauri dev` and confirm `target\debug\tauri-app.exe` runs without fatal errors.
+4. Re-run end-to-end after session persistence is confirmed and verify Tauri receives `usage-update` events in the dev console.
+5. Collect full terminal logs and attach to this JIRA file for audit.
 
-1. **Added cleanup_profile_locks() function** (src/scraper/claude_scraper.py:98-157)
-   - Kills zombie Chrome/chromedriver processes using profile directory
-   - Removes stale lock files from profile directory
-   - Uses psutil for robust process enumeration and termination
-   - Gracefully degrades if psutil not available
+Commands to reproduce:
+- Force login: `.\scraper\scraper-env\Scripts\python.exe -m src.scraper.claude_scraper --login`
+- Single poll: `.\scraper\scraper-env\Scripts\python.exe -m src.scraper.claude_scraper --poll_once`
+- Check processes (PowerShell): `Get-Process chrome*`
 
-2. **Integrated cleanup in create_driver()** (src/scraper/claude_scraper.py:176)
-   - Calls cleanup_profile_locks(profile_path) before attempting uc.Chrome()
-   - Ensures clean state before each driver creation
+Status: Partial — manual follow-up required to finalize acceptance criteria.
 
-3. **Added psutil dependency** (src/scraper/requirements.txt:10)
-   - psutil>=5.9.0 for cross-platform process management
-
-### Code Changes Summary
-
-**File: src/scraper/claude_scraper.py**
-- Lines 98-157: New cleanup_profile_locks() function
-- Line 176: Added cleanup call in create_driver()
-
-**File: src/scraper/requirements.txt**
-- Line 10: Added psutil>=5.9.0
-
-## Testing Plan
-
-### Manual Verification Steps
-1. Install dependencies: pip install -r src/scraper/requirements.txt
-2. Run scraper: python -m src.scraper.claude_scraper --poll_once
-3. Verify:
-   - No "cannot connect to chrome" errors
-   - Chrome launches successfully
-   - If logged in: extraction completes, JSON output to stdout
-   - If logged out: manual login flow triggers
-   - No zombie Chrome/chromedriver processes after exit
-   - Lock files removed from scraper/chrome-profile/
-
-### Expected Behavior
-- **First run**: May require manual login if session expired
-- **Subsequent runs**: Reuses session successfully without connection errors
-- **After crashes**: Cleanup function removes locks, allowing next run to succeed
-
-## Risk Assessment
-- **Low risk**: Changes are additive and defensive
-- **Graceful degradation**: Works without psutil (logs warning, skips process cleanup)
-- **Reversible**: Can be rolled back by removing cleanup call
-
-## Acceptance Criteria Status
--  Root cause identified (profile locking from zombie processes/stale lock files)
--  Minimal fix implemented (cleanup function + integration point)
--  Dependencies added (psutil in requirements.txt)
--  Testing pending (requires Chrome + potential manual login)
--  JIRA docs updated (this document)
-
-## Next Steps
-1. **Immediate**: Commit changes with reference to EPIC-02-STOR-01
-2. **Verification**: Run manual test with Chrome available
-3. **Long-term monitoring**: Track if issue recurs in production
-
-## Implementation Reference
-- **Commit ID**: (Pending - see git commit below)
-- **Files modified**: 
-  - src/scraper/claude_scraper.py (function + integration)
-  - src/scraper/requirements.txt (psutil dependency)
-
----
-**Updated**: 2025-11-16 13:21:26  
-**Resolution**: Implemented profile lock cleanup mechanism  
-**Tested**: Manual testing required (Chrome automation with potential login)
-
-
-## Test Result
-
-Verified: PASS
+-- End of report

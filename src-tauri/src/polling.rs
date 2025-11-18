@@ -8,6 +8,7 @@ use tokio::time;
 use serde_json::Value;
 use crate::scraper;
 use std::fmt;
+use tauri::Emitter;
 
 /// Poller controls a background task that invokes the scraper at intervals
 /// and emits events via a generic emitter closure.
@@ -46,7 +47,7 @@ impl Poller {
         // Wrap app_handle into a generic emitter closure and call start_with_emitter
         let emitter = Arc::new(move |event_name: String, payload: Value| {
             // best-effort emit (fire-and-forget)
-            let _ = app_handle.emit_all(&event_name, payload);
+            let _ = app_handle.emit(&event_name, payload);
         });
         self.start_with_emitter(emitter, interval_secs)
     }
@@ -69,6 +70,10 @@ impl Poller {
             let mut interval = time::interval(Duration::from_secs(interval_secs));
             // Immediate first tick
             interval.set_missed_tick_behavior(time::MissedTickBehavior::Delay);
+
+            // Circuit-breaker counter: stop polling after repeated consecutive failures.
+            let mut consecutive_failures: u32 = 0;
+
             loop {
                 if !running.load(Ordering::SeqCst) {
                     break;
@@ -82,14 +87,28 @@ impl Poller {
                 // Spawn a single-run scraper call with 30s timeout.
                 match scraper::spawn_scraper(vec!["--poll_once".to_string()], 30).await {
                     Ok(payload) => {
+                        // Reset failure counter on success
+                        consecutive_failures = 0;
                         (emitter)("usage-update".to_string(), payload);
                     }
                     Err(e) => {
+                        consecutive_failures = consecutive_failures.saturating_add(1);
+                        eprintln!("poller: scraper error (consecutive_failures={}): {}", consecutive_failures, e);
+
+                        // Emit the usage-error event as before
                         let mut obj = serde_json::Map::new();
                         obj.insert("status".to_string(), serde_json::Value::String("error".to_string()));
                         obj.insert("message".to_string(), serde_json::Value::String(e.to_string()));
                         let v = serde_json::Value::Object(obj);
                         (emitter)("usage-error".to_string(), v);
+
+                        // Trigger circuit-breaker after 5 consecutive failures
+                        if consecutive_failures >= 5 {
+                            eprintln!("poller: circuit_breaker_triggered, stopping poller after {} consecutive failures", consecutive_failures);
+                            // Mark running=false so external observers see state change
+                            running.store(false, Ordering::SeqCst);
+                            break;
+                        }
                     }
                 }
             }
@@ -184,5 +203,40 @@ mod tests {
             poller.start_with_emitter(emitter.clone(), 60).expect("start ok");
             poller.stop().expect("stop ok");
         });
+    }
+}
+#[cfg(test)]
+mod more_tests {
+    use super::*;
+    use std::sync::{Arc, Mutex};
+    use serde_json::json;
+    use tokio::time::{sleep, Duration};
+
+    // Simulate a failing scraper command via environment override and assert
+    // the poller stops after 5 consecutive failures.
+    #[tokio::test]
+    async fn test_poller_triggers_circuit_breaker_on_consecutive_failures() {
+        // Make spawn_scraper fail by using a command that exits with non-zero
+        std::env::set_var(
+            "CLAUDE_SCRAPER_CMD",
+            "python -c \"import sys; sys.exit(1)\"",
+        );
+
+        let events: Arc<Mutex<Vec<(String, serde_json::Value)>>> = Arc::new(Mutex::new(Vec::new()));
+        let events_clone = events.clone();
+
+        let emitter = Arc::new(move |event_name: String, payload: serde_json::Value| {
+            let mut guard = events_clone.lock().unwrap();
+            guard.push((event_name, payload));
+        });
+
+        let mut poller = Poller::new_default();
+        // start with 1s interval to speed up test
+        poller.start_with_emitter(emitter, 1).expect("failed to start poller");
+
+        // Wait long enough for 6 ticks (5 failures should stop the poller).
+        sleep(Duration::from_secs(8)).await;
+
+        assert!(!poller.is_running(), "Poller should have stopped after circuit breaker");
     }
 }
